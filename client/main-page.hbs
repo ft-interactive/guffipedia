@@ -1,0 +1,11 @@
+{{> top }}
+    <main>
+      <h1>GUFFIPEDIA</h1>
+
+      <ul>
+        {{#each words}}
+        <li><a href="{{@key}}/">{{word}}</a></li>
+        {{/each}}
+      </ul>
+    </main>
+{{> bottom }}

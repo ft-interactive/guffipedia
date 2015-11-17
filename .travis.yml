@@ -13,13 +13,4 @@ env:
   GITHUB_REPO: guffipedia
   GIT_DEPLOY_DIR: dist
   GIT_DEPLOY_BRANCH: gh-pages
-
-# You also need to a GITHUB_TOKEN environment variable
-# - but DO NOT put it in here because this is public.
-#
-# Instead, go to the repo settings page on Travis, and create
-# a secure variable called GITHUB_TOKEN there (and don't let it
-# display value in the build log).
-#
-# You can generate a token at https://github.com/settings/tokens
-# (you only need to give it "public_repo" access).
+  SPREADSHEET_KEY: 1oQVZsOL1iI8aAwMN_MyV_h8pWBwkRGTDQ_MC0yobICI

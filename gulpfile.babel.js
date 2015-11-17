@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import gulp from 'gulp';
+import Handlebars from 'handlebars';
 import igdeploy from 'igdeploy';
+import mkdirp from 'mkdirp';
 import mergeStream from 'merge-stream';
 import path from 'path';
 import runSequence from 'run-sequence';
@@ -13,6 +15,7 @@ import source from 'vinyl-source-stream';
 import subdir from 'subdir';
 import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
+
 const $ = require('auto-plug')('gulp');
 
 dotenv.load();
@@ -104,7 +107,7 @@ gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
 gulp.task('copy', () => gulp.src(
   OTHER_SCRIPTS.concat([
     'client/**/*',
-    '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
+    '!client/**/*.{html,scss,js,jpg,png,gif,svg,hbs}', // all handled by other tasks
   ]), {dot: true})
   .pipe(gulp.dest('dist'))
 );
@@ -115,7 +118,7 @@ gulp.task('html', done => {
     searchPath: ['.tmp', 'client', '.'],
   });
 
-  gulp.src('client/**/*.html')
+  gulp.src('.tmp/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify({output: {inline_script: true}}))) // eslint-disable-line camelcase
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
@@ -135,7 +138,7 @@ gulp.task('html', done => {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // // runs a development server (serving up .tmp and client)
-gulp.task('serve', ['styles'], function (done) {
+gulp.task('serve', ['download-data', 'styles'], function (done) {
   var bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front
@@ -157,11 +160,14 @@ gulp.task('serve', ['styles'], function (done) {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html'], browserSync.reload);
     gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', 'scsslint', browserSync.reload]);
     gulp.watch(['client/images/**/*'], browserSync.reload);
 
-    done();
+    gulp.watch(['./client/**/*.hbs', 'client/words.json'], () => {
+      runSequence('templates', browserSync.reload);
+    });
+
+    runSequence('templates', done);
   });
 });
 
@@ -203,22 +209,13 @@ gulp.task('scsslint', () => gulp.src('client/styles/**/*.scss')
   // .pipe($.if(env === 'production', $.scssLint.failReporter()))
 );
 
-// sets up watch-and-rebuild for JS and CSS
-gulp.task('watch', done => {
-  runSequence('clean', ['scripts', 'styles'], () => {
-    gulp.watch('./client/**/*.scss', ['styles', 'scsslint']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
-    done();
-  });
-});
-
 // makes a production build (client => dist)
 gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', 'scsslint', 'eslint'],
-    ['scripts', 'styles', 'copy'],
+    ['clean', 'scsslint', 'eslint', 'download-data'],
+    ['scripts', 'styles', 'copy', 'templates'],
     ['html', 'images'],
   done);
 });
@@ -240,20 +237,49 @@ gulp.task('deploy', done => {
   });
 });
 
+// downloads the data from bertha to client/words.json
 gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/data`)
   .then(res => res.json())
   .then(spreadsheet => {
-    const data = {};
+    const words = {};
 
-    for (const word of spreadsheet) {
-      data[word.slug] = data[word.slug] || [];
-      data[word.slug].push(word);
+    for (const row of spreadsheet) {
+      if (!words[row.slug]) {
+        words[row.slug] = {
+          word: row.word,
+          definitions: [],
+          pageTitle: `Guffipedia: “${row.word}” – FT.com`,
+        };
+      }
 
-      if (data[word.slug].length > 1) {
-        console.log('Multiple definitions for this slug:', word.slug);
+      words[row.slug].definitions.push(row);
+
+      if (words[row.slug].length > 1) {
+        console.log('Multiple words for this slug:', row.slug);
       }
     }
 
-    fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+    fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
   })
 );
+
+gulp.task('templates', () => {
+  Handlebars.registerPartial('top', fs.readFileSync('client/top.hbs', 'utf8'));
+  Handlebars.registerPartial('bottom', fs.readFileSync('client/bottom.hbs', 'utf8'));
+
+  const definitionPageTemplate = Handlebars.compile(fs.readFileSync('client/definition-page.hbs', 'utf8'));
+
+  const words = JSON.parse(fs.readFileSync('client/words.json', 'utf8'));
+
+  for (const slug of Object.keys(words)) {
+    const word = words[slug];
+    const html = definitionPageTemplate(word);
+
+    mkdirp.sync(`.tmp/${slug}`);
+    fs.writeFileSync(`.tmp/${slug}/index.html`, html);
+  }
+
+  const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
+  const html = mainPageTemplate({words});
+  fs.writeFileSync(`.tmp/index.html`, html);
+});
