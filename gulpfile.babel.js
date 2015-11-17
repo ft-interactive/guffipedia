@@ -1,6 +1,9 @@
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
+import dotenv from 'dotenv';
+import fetch from 'node-fetch';
+import fs from 'fs';
 import gulp from 'gulp';
 import igdeploy from 'igdeploy';
 import mergeStream from 'merge-stream';
@@ -11,6 +14,8 @@ import subdir from 'subdir';
 import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
 const $ = require('auto-plug')('gulp');
+
+dotenv.load();
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
@@ -234,3 +239,21 @@ gulp.task('deploy', done => {
     console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
   });
 });
+
+gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/data`)
+  .then(res => res.json())
+  .then(spreadsheet => {
+    const data = {};
+
+    for (const word of spreadsheet) {
+      data[word.slug] = data[word.slug] || [];
+      data[word.slug].push(word);
+
+      if (data[word.slug].length > 1) {
+        console.log('Multiple definitions for this slug:', word.slug);
+      }
+    }
+
+    fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+  })
+);
