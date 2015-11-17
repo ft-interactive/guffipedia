@@ -1,6 +1,7 @@
 sudo: false
 language: node_js
 node_js: '5.0'
+before_install: 'bundle'
 deploy:
   skip_cleanup: true
   provider: script
