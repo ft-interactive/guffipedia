@@ -8,8 +8,8 @@ deploy:
   on:
     branch: master
 env:
-  GITHUB_USER: callumlocke
-  GITHUB_REPO: auto-deploy-demo
+  GITHUB_USER: ft-interactive
+  GITHUB_REPO: guffipedia
   GIT_DEPLOY_DIR: dist
   GIT_DEPLOY_BRANCH: gh-pages
 
