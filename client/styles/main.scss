@@ -31,46 +31,49 @@ body {
       height: 18px;
     }
 
-h1{
+
+h1 {
   font-family: MetricWeb;
   font-weight: 200;
-  text-align: left;
+  text-align: center;
   font-size: 4em;
   line-height: 1.4em;
   margin: 0px;
   color: #000000;
 }
 
-.subheader{
+.subheader {
   font-family: MetricWeb;
   font-size: 1.8em;
-  line-height: 1.2em;
+  line-height: 1.1em;
+  text-align: center;
   margin-top: 2px;
   color: #6a6d68;
 }
 
-.headshot{
-  img {height:120px;}
-
+.headshot {
+   img {width: 150px;
+    display: block;
+    margin: 0 auto;}
 }
 
-.headerLine{
-  border-style: solid;
-  border-color: black;
-  border-width: .5px;
+.line {
+  margin-top: 5px;
+  border-bottom: 1px solid #e9decf;
 }
 
-{
-  img {height:120px;}
-
-}
-
-.eachWord{
-  font-family: courier;
-  font-style: bold;
+@include oGridRespondTo(S) {
+  .headshot {
+    img {float: right;
+      position: relative;
+    }
+  }
+  h1 {
   text-align: left;
-  font-size: 1.6em;
-  line-height: 1em;
-  color: #B0797A; 
+  }
+  .subheader {
+  text-align: left;
+  }
 
 }
+
