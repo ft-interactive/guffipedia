@@ -44,6 +44,7 @@ h1 {
 }
 
 .subheader {
+  width: 100%;
   font-family: MetricWeb;
   font-size: 1.8em;
   line-height: 1.1em;
@@ -65,8 +66,10 @@ h1 {
 
 @include oGridRespondTo(S) {
   .headshot {
-    img {float: right;
-      position: relative;
+    img {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
   h1 {
@@ -74,13 +77,23 @@ h1 {
   }
   .subheader {
   text-align: left;
+  width: 85%;
   }
+}
+
+@include oGridRespondTo(L) {
+  .headshot {
+    img {
+      width: 120px;
+    }
+  }
+}
 
 
 
 main {
-  padding: 0 15px 0 15px;
-  @include oGridColspan((default: full-width, M: 8, L: 6));
+  padding: 0 15px;
+  @include oGridColspan((default: full-width, M: 10, L: 8));
   @include oGridCenter;
   .guff-container {
     margin-top: 20px;
@@ -94,7 +107,6 @@ main {
       text-decoration: none;
     }
     ul.definitions {
-      border-top: 1px solid black;
       padding: 0 0 18px 18px;
       &:first-child {
         border-top: none;
