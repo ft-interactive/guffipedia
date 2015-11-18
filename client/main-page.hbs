@@ -15,21 +15,10 @@
 						<li>
 							<ul class="definition">
 								{{#if definition}}
-									<li class="definition">
-										<strong>Plain English definition</strong>
-										<br/>
-										{{definition}}
-									</li>
+									<li class="definition">Translation: {{definition}}</li>
 								{{/if}}
 								{{#if usageexample}}
-									<li class="usageexample">
-										<strong>Usage example</strong>
-										<br/>
-										{{usageexample}}
-									</li>
-								{{/if}}
-								{{#if submissiondate}}
-									<li class="submissiondate">Submitted on {{submissiondate}}</li>
+									<li class="usageexample">{{usageexample}}</li>
 								{{/if}}
 								{{#if relatedwords}}
 									<li class="relatedwords">Related words</li>
