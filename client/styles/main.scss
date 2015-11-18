@@ -32,40 +32,68 @@ body {
       height: 18px;
     }
 
-h1{
+
+h1 {
   font-family: MetricWeb;
   font-weight: 200;
-  text-align: left;
+  text-align: center;
   font-size: 4em;
   line-height: 1.4em;
   margin: 0px;
   color: #000000;
 }
 
-.subheader{
+.subheader {
+  width: 100%;
   font-family: MetricWeb;
   font-size: 1.8em;
-  line-height: 1.2em;
+  line-height: 1.1em;
+  text-align: center;
   margin-top: 2px;
   color: #6a6d68;
 }
 
-.headshot{
-  img {height:120px;}
-
+.headshot {
+   img {width: 150px;
+    display: block;
+    margin: 0 auto;}
 }
 
-.headerLine{
-  border-style: solid;
-  border-color: black;
-  border-width: .5px;
-  img {height:120px;}
-
+.line {
+  margin-top: 5px;
+  border-bottom: 1px solid #e9decf;
 }
+
+@include oGridRespondTo(S) {
+  .headshot {
+    img {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  h1 {
+  text-align: left;
+  }
+  .subheader {
+  text-align: left;
+  width: 85%;
+  }
+}
+
+@include oGridRespondTo(L) {
+  .headshot {
+    img {
+      width: 120px;
+    }
+  }
+}
+
+
 
 main {
-  padding: 0 15px 0 15px;
-  @include oGridColspan((default: full-width, M: 8, L: 6));
+  padding: 0 15px;
+  @include oGridColspan((default: full-width, M: 10, L: 8));
   @include oGridCenter;
   .guff-container {
     margin-top: 20px;
@@ -79,7 +107,6 @@ main {
       text-decoration: none;
     }
     ul.definitions {
-      border-top: 1px solid black;
       padding: 0 0 18px 18px;
       &:first-child {
         border-top: none;
@@ -96,4 +123,6 @@ main {
       }
     }
   }
+
 }
+
