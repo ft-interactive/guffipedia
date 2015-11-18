@@ -1,21 +1,48 @@
 {{> top }}
     <main>
-     <div class="o-grid-row">
-     	<div data-o-grid-colspan="10 S10 M10 L10">
-	     	<h1>FT Guffipedia</h1>
-	     	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
-	    </div>
-	     <div data-o-grid-colspan="2 S2 M2 L2">
-			<div class="headshot"><img src="images/lucy.png"></div>
+	    <div class="o-grid-row">
+	     	<div data-o-grid-colspan="10 S10 M10 L10">
+		     	<h1>FT Guffipedia</h1>
+		     	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
+		    </div>
+		    <div data-o-grid-colspan="2 S2 M2 L2">
+				<div class="headshot"><img src="images/lucy.png"></div>
+			</div>
+			<span class="headerLine"></span>
 		</div>
-		<span class="headerLine">
-	</div>
 
-
-      <ul class="eachWord">
-        {{#each words}}
-        <li><a href="{{@key}}/">{{word}}</a></li>
-        {{/each}}
-      </ul>
+		<div class="guff-container">
+			{{#each words}}
+				<a class="guff" href="{{@key}}/">{{word}}</a>
+				<ul class="definitions">
+					{{#each definitions}}
+						<li>
+							<ul class="definition">
+								{{#if definition}}
+									<li class="definition">
+										<strong>Plain English definition</strong>
+										<br/>
+										{{definition}}
+									</li>
+								{{/if}}
+								{{#if usageexample}}
+									<li class="usageexample">
+										<strong>Usage example</strong>
+										<br/>
+										{{usageexample}}
+									</li>
+								{{/if}}
+								{{#if submissiondate}}
+									<li class="submissiondate">Submitted on {{submissiondate}}</li>
+								{{/if}}
+								{{#if relatedwords}}
+									<li class="relatedwords">Related words</li>
+								{{/if}}
+							</ul>
+						</li>
+					{{/each}}
+				</ul>
+			{{/each}}
+		</div>
     </main>
 {{> bottom }}

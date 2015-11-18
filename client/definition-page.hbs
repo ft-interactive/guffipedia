@@ -1,11 +1,55 @@
 {{> top }}
-    <a href="../">Guffipedia &gt;</a>
-    <main>
-      <h1>{{word}}</h1>
+	<main>
+		<a href="../">Guffipedia &gt;</a>
+		<h1>{{word}}</h1>
 
-      {{#each definitions}}
-        <h5>Definition:</h5>
-        <p>{{definition}}</p>
-      {{/each}}
-    </main>
+		<ul class="definitions">
+			{{#each definitions}}
+				<li>
+					<ul class="definition">
+						{{#if definition}}
+							<li class="definition">
+								<strong>Plain English definition</strong>
+								<br/>
+								{{definition}}
+							</li>
+						{{/if}}
+						{{#if sourceurl}}
+						{{#if usagesource}}
+							<li class="source">Spotted at <a href="{{sourceurl}}">{{usagesource}}</a></li>
+						{{/if}}
+						{{/if}}
+						{{#if perpetrator}}
+							<li class="perpetrator">
+								<strong>Perpetrator</strong>
+								<br/>
+								{{perpetrator}}
+							</li>
+						{{/if}}
+						{{#if usageexample}}
+							<li class="usageexample">
+								<strong>Usage example</strong>
+								<br/>
+								{{usageexample}}
+							</li>
+						{{/if}}
+						{{#if lucycommentary}}
+						{{#if commenturl}}
+							<li class="lucycommentary">
+								<strong><a href="{{commenturl}}">Lucy's Commentary</a></strong>
+								<br/>
+								{{lucycommentary}}</li>
+						{{/if}}
+						{{/if}}
+						{{#if submissiondate}}
+							<li class="submissiondate">Submitted on {{submissiondate}}</li>
+						{{/if}}
+						{{#if relatedwords}}
+							<li class="relatedwords">Related words</li>
+						{{/if}}
+					</ul>
+				</li>
+			{{/each}}
+		</ul>
+	</main>
 {{> bottom }}
