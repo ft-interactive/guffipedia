@@ -1,8 +1,18 @@
 {{> top }}
     <main>
-      <h1>GUFFIPEDIA</h1>
+     <div class="o-grid-row">
+     	<div data-o-grid-colspan="10 S10 M10 L10">
+	     	<h1>FT Guffipedia</h1>
+	     	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
+	    </div>
+	     <div data-o-grid-colspan="2 S2 M2 L2">
+			<div class="headshot"><img src="images/lucy.png"></div>
+		</div>
+		<span class="headerLine">
+	</div>
 
-      <ul>
+
+      <ul class="eachWord">
         {{#each words}}
         <li><a href="{{@key}}/">{{word}}</a></li>
         {{/each}}

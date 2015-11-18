@@ -1,6 +1,9 @@
 @import 'o-fonts/main';
+$o-grid-is-silent: false;
+
 @import 'o-colors/main';
 @import 'o-footer/main';
+@import 'o-grid/main';
 
 @import 'fonts';
 
@@ -27,3 +30,47 @@ body {
     .masthead {
       height: 18px;
     }
+
+h1{
+  font-family: MetricWeb;
+  font-weight: 200;
+  text-align: left;
+  font-size: 4em;
+  line-height: 1.4em;
+  margin: 0px;
+  color: #000000;
+}
+
+.subheader{
+  font-family: MetricWeb;
+  font-size: 1.8em;
+  line-height: 1.2em;
+  margin-top: 2px;
+  color: #6a6d68;
+}
+
+.headshot{
+  img {height:120px;}
+
+}
+
+.headerLine{
+  border-style: solid;
+  border-color: black;
+  border-width: .5px;
+}
+
+{
+  img {height:120px;}
+
+}
+
+.eachWord{
+  font-family: courier;
+  font-style: bold;
+  text-align: left;
+  font-size: 1.6em;
+  line-height: 1em;
+  color: #B0797A; 
+
+}
