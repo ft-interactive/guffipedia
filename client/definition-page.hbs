@@ -1,7 +1,12 @@
 {{> top }}
 	<main>
-		<a href="../">Guffipedia &gt;</a>
-		<h1>{{word}}</h1>
+		<!-- <a href="../"FT Guffipedia &gt;</a> -->
+		<h1>FT Guffipedia</h1>
+     	<div class="headshot"><img src="images/lucy.png"></div>
+     	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
+     	<div class="line"></div>
+
+		<div class="word">{{word}}</div>
 
 		<ul class="definitions">
 			{{#each definitions}}
@@ -9,7 +14,7 @@
 					<ul class="definition">
 						{{#if definition}}
 							<li class="definition">
-								<strong>Plain English definition</strong>
+								<strong>Translation</strong>
 								<br/>
 								{{definition}}
 							</li>

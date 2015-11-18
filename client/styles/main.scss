@@ -74,6 +74,7 @@ h1 {
   }
   h1 {
   text-align: left;
+  text-decoration: none;
   }
   .subheader {
   text-align: left;
@@ -89,6 +90,10 @@ h1 {
   }
 }
 
+.source {
+  text-decoration: none;
+}
+
 
 
 main {
@@ -97,32 +102,46 @@ main {
   @include oGridCenter;
   .guff-container {
     margin-top: 20px;
-    .guff {
-      color: $dark-pink;
-      font-family: "courier";
-      font-size: 1.6em;
-      font-style: bold;
-      line-height: 1em;
-      text-align: left;
-      text-decoration: none;
+  }
+  .word {
+    margin-top: 20px;
+    color: $dark-pink;
+    font-family: "courier";
+    font-size: 1.9em;
+    font-weight: 600;
+    line-height: 1em;
+    text-align: left;
+    text-decoration: none;
+  }
+  .guff {
+    color: $dark-pink;
+    font-family: "courier";
+    font-size: 1.9em;
+    font-weight: 600;
+    line-height: 1em;
+    text-align: left;
+    text-decoration: none;
+  }
+  ul.definitions {
+    padding: 0 0 18px 18px;
+    font-family: MetricWeb;
+    text-align: left;
+    font-size: 1.4em;
+    line-height: 1.2em;
+    color: #6a6d68;
+    &:first-child {
+      border-top: 0;
     }
-    ul.definitions {
-      padding: 0 0 18px 18px;
-      &:first-child {
-        border-top: none;
-      }
-      > li {
-        list-style-type: none;
-        ul.definition {
-          padding-left: 5px;
-          > li {
-            list-style-type: none;
-            margin: 5px 0;
-          }
+    > li {
+      list-style-type: none;
+      ul.definition {
+        padding-left: 5px;
+        > li {
+          list-style-type: none;
+          margin: 5px 0;
         }
       }
     }
   }
-
 }
 
