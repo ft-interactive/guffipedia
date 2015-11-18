@@ -54,7 +54,7 @@ h1 {
 }
 
 .headshot {
-   img {width: 150px;
+   img {width: 170px;
     display: block;
     margin: 0 auto;}
 }
@@ -67,6 +67,7 @@ h1 {
 @include oGridRespondTo(S) {
   .headshot {
     img {
+      width: 154px;
       position: absolute;
       top: 0;
       right: 0;
@@ -78,14 +79,22 @@ h1 {
   }
   .subheader {
   text-align: left;
-  width: 85%;
+  width: 75%;
   }
 }
 
 @include oGridRespondTo(L) {
   .headshot {
     img {
-      width: 120px;
+      width: 154px;
+    }
+  }
+}
+
+@include oGridRespondTo(XL) {
+  .headshot {
+    img {
+      width: 122px;
     }
   }
 }
@@ -98,7 +107,7 @@ h1 {
 
 main {
   padding: 0 15px;
-  @include oGridColspan((default: full-width, M: 10, L: 8));
+  @include oGridColspan((default: full-width, M: 10, L: 10));
   @include oGridCenter;
   .guff-container {
     margin-top: 20px;
