@@ -125,7 +125,7 @@ main {
   .guff {
     color: $dark-pink;
     font-family: "courier";
-    font-size: 1.9em;
+    font-size: 2.0em;
     font-weight: 600;
     line-height: 1em;
     text-align: left;
@@ -151,6 +151,9 @@ main {
         }
       }
     }
+  }
+  .definitions a{
+    text-decoration: none;
   }
 }
 
