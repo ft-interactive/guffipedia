@@ -112,13 +112,13 @@ main {
   @include oGridColspan((default: full-width, M: 10, L: 10));
   @include oGridCenter;
   .guff-container {
-    margin-top: 10px;
+    margin-top: 20px;
   }
   .word {
     margin-top: 20px;
     color: $dark-pink;
     font-family: "courier";
-    font-size: 1.9em;
+    font-size: 2em;
     font-weight: 600;
     line-height: 1em;
     text-align: left;
@@ -135,6 +135,7 @@ main {
   }
   ul.definitions {
     padding: 0 0 5px 18px;
+    margin-top: 8px;
     font-family: MetricWeb;
     text-align: left;
     font-size: 1.4em;
@@ -156,7 +157,7 @@ main {
   }
   .definitions a{
     text-decoration: none;
-    color: #007DC5;
+    color: #007DC5
   }
 }
 
