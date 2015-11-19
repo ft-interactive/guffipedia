@@ -7,6 +7,7 @@
     "o-hoverable": "~1.1.0",
     "o-fonts": "~1.6.4",
     "o-footer": "~4.0.0",
-    "o-grid": "^4.0.0"
+    "o-grid": "^4.0.0",
+    "o-buttons": "2.0.4"
   }
 }

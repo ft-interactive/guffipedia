@@ -1,9 +1,11 @@
 @import 'o-fonts/main';
 $o-grid-is-silent: false;
+$o-buttons-is-silent: false;
 
 @import 'o-colors/main';
 @import 'o-footer/main';
 @import 'o-grid/main';
+@import 'o-buttons/main';
 
 @import 'fonts';
 @import 'colours';
@@ -41,7 +43,7 @@ h1 {
   line-height: 1.4em;
   margin: 0px;
   color: #000000;
-  a {color: #000000;;
+  a {color: #000000;
     text-decoration: none}
 }
 
