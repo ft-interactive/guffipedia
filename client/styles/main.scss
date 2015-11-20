@@ -80,9 +80,7 @@ h1 {
 }
 
 .backButon {
-  width: 50%;
-  margin: auto;
-  display: block;
+  width: 70px;
 }
 
 @include oGridRespondTo(S) {
