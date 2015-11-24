@@ -43,8 +43,10 @@ h1 {
   line-height: 1.4em;
   margin: 0px;
   color: #000000;
-  a {color: #000000;
-    text-decoration: none}
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
 }
 
 .subheader {
@@ -58,9 +60,11 @@ h1 {
 }
 
 .headshot {
-   img {width: 170px;
+   img {
+    width: 170px;
     display: block;
-    margin: 0 auto;}
+    margin: 0 auto;
+  }
 }
 
 .line {
@@ -68,7 +72,7 @@ h1 {
   border-bottom: 1px solid #e9decf;
 }
 
-.o-buttons{
+.o-buttons {
   display: block;
   font-family: MetricWeb;
   font-size: 1.4em;
@@ -79,7 +83,7 @@ h1 {
   border-width: 0px;
 }
 
-.backButon {
+.back-button {
   width: 70px;
 }
 
@@ -125,9 +129,9 @@ h1 {
 
 
 main {
-  padding: 0 15px;
   @include oGridColspan((default: full-width, M: 10, L: 10));
   @include oGridCenter;
+  padding: 0 15px;
   .guff-container {
     margin-top: 20px;
   }
@@ -144,7 +148,7 @@ main {
   .guff {
     color: $dark-pink;
     font-family: "courier";
-    font-size: 2.0em;
+    font-size: 2em;
     font-weight: 600;
     line-height: 1em;
     text-align: left;
@@ -172,9 +176,9 @@ main {
       }
     }
   }
-  .definitions a{
+  .definitions a {
     text-decoration: none;
-    color: #007DC5
+    color: #007dc5;
   }
 }
 
