@@ -244,18 +244,36 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
     const words = {};
 
     for (const row of spreadsheet) {
-      if (!words[row.slug]) {
-        words[row.slug] = {
-          word: row.word,
-          definitions: [],
-          pageTitle: `Guffipedia: “${row.word}” – FT.com`,
+      if (words[row.slug]) throw new Error('Already exists: ' + row.slug);
+
+      row.pageTitle = `Guffipedia: “${row.word}” – FT.com`;
+
+      words[row.slug] = row;
+    }
+
+    var slugIndex = Object.keys(words).sort();
+
+    for (const row of spreadsheet) {
+      let currentSlug = row.slug;
+
+      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWordSlug => {
+        return {
+          slug: relatedWordSlug,
+          word: words[relatedWordSlug].word
+        };
+      });
+
+      if (slugIndex.indexOf(currentSlug) > 0) {
+        words[currentSlug].previousWord = {
+          slug: words[slugIndex[slugIndex.indexOf(currentSlug)-1]].slug,
+          word: words[slugIndex[slugIndex.indexOf(currentSlug)-1]].word
         };
       }
-
-      words[row.slug].definitions.push(row);
-
-      if (words[row.slug].length > 1) {
-        console.log('Multiple words for this slug:', row.slug);
+      if (slugIndex.indexOf(currentSlug) < slugIndex.length-1) {
+        words[currentSlug].nextWord = {
+          slug: words[slugIndex[slugIndex.indexOf(currentSlug)+1]].slug,
+          word: words[slugIndex[slugIndex.indexOf(currentSlug)+1]].word
+        };
       }
     }
 

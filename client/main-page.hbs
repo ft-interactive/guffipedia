@@ -5,33 +5,29 @@
      	<div class="headshot"><img src="images/lucy.png"></div>
      	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
      	<div class="line"></div>
-     	<div class="suggest">
-			<button id="suggest" class="o-buttons o-buttons--standout">Suggest an entry</button>
-		</div>
+     	<a href="/guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
 
 
-		<div class="guff-container">
+		<ul class="guffs">
 			{{#each words}}
-				<a class="guff" href="{{@key}}/">{{word}}</a>
-				<ul class="definitions">
-					{{#each definitions}}
-						<li>
-							<ul class="definition">
-								{{#if definition}}
-									<li class="definitionS"><strong>Translation
-									</strong> {{definition}}</li>
-								{{/if}}
-								{{#if usageexample}}
-									<li class="usageexample">{{usageexample}}</li>
-								{{/if}}
-								{{#if relatedwords}}
-									<li class="relatedwords">Related words</li>
-								{{/if}}
-							</ul>
-						</li>
-					{{/each}}
-				</ul>
+			<li class="guff">
+				<a class="word" href="{{@key}}/">{{word}}</a>
+				<div class="details">
+					{{#if definition}}
+						<p class="detail definition"><strong>Translation
+						</strong> {{definition}}</p>
+					{{/if}}
+					{{#if usageexample}}
+						<p class="detail usageexample">{{usageexample}}</p>
+					{{/if}}
+					{{#if relatedwords}}
+						<p class="detail relatedwords"><strong>Related:</strong>
+						{{#each relatedwords}}<a href="{{slug}}/">{{word}}</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
+						</p>
+					{{/if}}
+				</div>
+			</li>
 			{{/each}}
-		</div>
+		</ul>
     </main>
 {{> bottom }}

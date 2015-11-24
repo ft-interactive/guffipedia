@@ -5,58 +5,62 @@
      	<div class="headshot"><img src="images/lucy.png"></div>
      	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
      	<div class="line"></div>
-     	<div class="suggest">
-			<button id="suggest" class="o-buttons o-buttons--standout">Suggest an entry</button>
+     	<a href="/guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
+
+		<div class="detailed-guff">
+			<div class="word">{{word}}</div>
+			<div class="details">
+				{{#if definition}}
+					<p class="detail definition"><strong>Translation
+					</strong> {{definition}}</p>
+				{{/if}}
+				{{#if sourceurl}}
+				{{#if usagesource}}
+					<p class="detail source">Spotted at <a href="{{sourceurl}}">{{usagesource}}</a></p>
+				{{/if}}
+				{{/if}}
+				{{#if perpetrator}}
+					<p class="detail perpetrator">
+						<strong>Perpetrator</strong>
+						{{perpetrator}}
+					</p>
+				{{/if}}
+				{{#if usageexample}}
+					<p class="detail usageexample">
+						<strong>Usage example </strong>
+						{{usageexample}}
+					</p>
+				{{/if}}
+				{{#if lucycommentary}}
+				{{#if commenturl}}
+					<p class="detail lucycommentary">
+						<strong><a href="{{commenturl}}">Lucy's Commentary</a></strong>
+						{{lucycommentary}}</p>
+				{{/if}}
+				{{/if}}
+				{{#if relatedwords}}
+					<p class="detail relatedwords"><strong>Related:</strong>
+					{{#each relatedwords}}<a href="{{slug}}/">{{word}}</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
+					</p>
+				{{/if}}
+			</div>
 		</div>
-
-		<div class="word">{{word}}</div>
-
-		<ul class="definitions">
-			{{#each definitions}}
-				<li>
-					<ul class="definition">
-						{{#if definition}}
-							<li class="definition">
-								<strong>Translation</strong>
-								{{definition}}
-							</li>
-						{{/if}}
-						{{#if sourceurl}}
-						{{#if usagesource}}
-							<li class="source">Spotted at <a href="{{sourceurl}}">{{usagesource}}</a></li>
-						{{/if}}
-						{{/if}}
-						{{#if perpetrator}}
-							<li class="perpetrator">
-								<strong>Perpetrator</strong>
-								{{perpetrator}}
-							</li>
-						{{/if}}
-						{{#if usageexample}}
-							<li class="usageexample">
-								<strong>Usage example </strong>
-								{{usageexample}}
-							</li>
-						{{/if}}
-						{{#if lucycommentary}}
-						{{#if commenturl}}
-							<li class="lucycommentary">
-								<strong><a href="{{commenturl}}">Lucy's Commentary</a></strong>
-								{{lucycommentary}}</li>
-						{{/if}}
-						{{/if}}
-						{{#if submissiondate}}
-							<li class="submissiondate">Submitted on {{submissiondate}}</li>
-						{{/if}}
-						{{#if relatedwords}}
-							<li class="relatedwords">Related words</li>
-						{{/if}}
-					</ul>
-				</li>
-			{{/each}}
-		</ul>
-		<form class="back-button" action="..">
-			<button id="back" class="o-buttons o-buttons--standout">Back</button>
-		</form>
+		<div class="navigate-guff">
+			{{#if previousWord}}
+				<div class="button-container previous">
+					<a href="{{previousWord.slug}}/" class="o-buttons o-buttons--standout">Previous Guff: <span class="preview">{{previousWord.word}}</span></a>
+				</div>
+			{{/if}}
+			{{#if nextWord}}
+				<div class="button-container next">
+					<a href="{{nextWord.slug}}/" class="o-buttons o-buttons--standout">Next Guff: <span class="preview">{{nextWord.word}}</span></a>
+				</div>
+			{{/if}}
+		</div>
+		<div class="bottom-container">
+			<a href="../" class="back-button o-buttons o-buttons--standout">Back</a>
+			<a href="https://twitter.com/share" class="twitter-share-button"{count} data-text="Check out this guff" data-via="FT" data-hashtags="guffipedia">Tweet This</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		</div>
 	</main>
 {{> bottom }}
