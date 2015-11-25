@@ -35,30 +35,6 @@ body {
     }
 
 
-h1 {
-  font-family: MetricWeb;
-  font-weight: 200;
-  text-align: center;
-  font-size: 4em;
-  line-height: 1.4em;
-  margin: 0px;
-  color: #000000;
-  a {
-    color: #000000;
-    text-decoration: none;
-  }
-}
-
-.subheader {
-  width: 100%;
-  font-family: MetricWeb;
-  font-size: 1.8em;
-  line-height: 1.1em;
-  text-align: center;
-  margin-top: 2px;
-  color: #6a6d68;
-}
-
 .headshot {
    img {
     width: 170px;
@@ -81,6 +57,9 @@ h1 {
   margin-top: 8px;
   background-color: #ccc2c2;
   border-width: 0px;
+  &:hover {
+    color: inherit;
+  }
 }
 
 @include oGridRespondTo(S) {
@@ -91,14 +70,6 @@ h1 {
       top: 0;
       right: 0;
     }
-  }
-  h1 {
-  text-align: left;
-  text-decoration: none;
-  }
-  .subheader {
-  text-align: left;
-  width: 75%;
   }
 }
 
@@ -123,9 +94,49 @@ h1 {
 }
 
 main {
-  @include oGridColspan((default: full-width, M: 10, L: 10));
+  @include oGridColspan((default: full-width, M: 10, L: 8, XL: 6));
   @include oGridCenter;
   padding: 0 15px;
+  h1 {
+    font-family: MetricWeb;
+    font-weight: 200;
+    text-align: center;
+    font-size: 2.5em;
+    line-height: 1.4em;
+    margin: 0px;
+    color: #000000;
+    @include oGridRespondTo(S) {
+      font-size: 4em;
+      text-align: left;
+    }
+    a {
+      color: black;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 10%);
+    }
+  }
+  .subheader {
+    width: 100%;
+    font-family: MetricWeb;
+    font-size: 1.5em;
+    line-height: 1.1em;
+    text-align: center;
+    margin-top: 2px;
+    color: #6a6d68;
+    @include oGridRespondTo(S) {
+      font-size: 1.8em;
+      text-align: left;
+      width: 75%;
+    }
+  }
   .guffs {
     margin-top: 20px;
     padding-left: 0;
@@ -134,26 +145,37 @@ main {
     list-style-type: none;
     margin-bottom: 10px;
   }
-  .word {
+  @mixin word-style() {
     color: $dark-pink;
     font-family: "courier";
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: 600;
     line-height: 1em;
     text-align: left;
     text-decoration: none;
+    @include oGridRespondTo(S) {
+      font-size: 2em;
+    }
+  }
+  a.word {
+    @include word-style();
+    &:hover {
+      color: darken($dark-pink, 10%);
+    }
+  }
+  div.word {
+    @include word-style();
   }
   .details {
     padding: 0 0 5px 18px;
     margin-top: 8px;
     font-family: MetricWeb;
     text-align: left;
-    font-size: 1.4em;
+    font-size: 1em;
     line-height: 1.2em;
     color: #6a6d68;
-    a {
-      text-decoration: none;
-      color: #007dc5;
+    @include oGridRespondTo(S) {
+      font-size: 1.4em;
     }
     .detail {
       margin-top: 0.5em;
@@ -166,6 +188,9 @@ main {
   }
   .detailed-guff {
     margin-top: 15px;
+    .twitter-share-button {
+      margin-top: 10px;
+    }
   }
   .navigate-guff {
     &:after {
@@ -173,22 +198,25 @@ main {
       content: "";
       display: block;
     }
-    .button-container {
-      @include oGridRespondTo(S) {
-        box-sizing: border-box;
-        padding: 0 10px;
-        width: 50%;
-        &.previous {
-          float: left;
-        }
-        &.next {
-          float: right;
-        }
-      }
-    }
-    .o-buttons {
+    a {
       display: block;
       font-weight: bold;
+      margin: 15px 0;
+      text-align: center;
+      @include oGridRespondTo(S) {
+        box-sizing: border-box;
+        display: inline;
+        padding: 0 10px;
+        width: 50%;
+        &.previous-guff {
+          float: left;
+          text-align: left;
+        }
+        &.next-guff {
+          float: right;
+          text-align: right;
+        }
+      }
       .preview {
         font-weight: normal;
       }
@@ -204,10 +232,6 @@ main {
     .back-button {
       float: left;
       width: 70px;
-    }
-    .twitter-share-button {
-      float: right;
-      margin-top: 8px;
     }
   }
 }
