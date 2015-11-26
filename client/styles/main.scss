@@ -84,7 +84,7 @@ body {
 @include oGridRespondTo(XL) {
   .headshot {
     img {
-      width: 122px;
+      width: 154px;
     }
   }
 }
@@ -218,7 +218,11 @@ main {
         }
       }
       .preview {
+        font-family: "courier";
         font-weight: normal;
+        color: $dark-pink;
+
+
       }
     }
   }
