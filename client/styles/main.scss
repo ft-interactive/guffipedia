@@ -71,6 +71,10 @@ body {
       right: 0;
     }
   }
+  .twitter-share-button {
+    margin-top: 5px;
+
+  }
 }
 
 @include oGridRespondTo(L) {
@@ -189,7 +193,7 @@ main {
   .detailed-guff {
     margin-top: 15px;
     .twitter-share-button {
-      top: 0px;
+      top: 20px;
       margin-right: 8px;
       float: right;
     }
@@ -223,6 +227,7 @@ main {
       }
       .preview {
         font-family: "courier";
+        font-size: 1.2em;
         font-weight: 600;
         color: $dark-pink;
         &:hover {
@@ -233,6 +238,7 @@ main {
       }
     }
   }
+
   .bottom-container {
     margin-top: 15px;
     &:after {
