@@ -160,7 +160,7 @@ main {
   a.word {
     @include word-style();
     &:hover {
-      color: darken($dark-pink, 10%);
+      color: darken($dark-pink, 30%);
     }
   }
   div.word {
@@ -202,7 +202,7 @@ main {
     }
     a {
       display: block;
-      font-weight: bold;
+      font-weight: normal;
       margin: 15px 0;
       text-align: center;
       @include oGridRespondTo(S) {
@@ -211,18 +211,23 @@ main {
         padding: 0 10px;
         width: 50%;
         &.previous-guff {
+          font-size: 1.1em;
           float: left;
           text-align: left;
         }
         &.next-guff {
+          font-size: 1.1em;
           float: right;
           text-align: right;
         }
       }
       .preview {
         font-family: "courier";
-        font-weight: normal;
+        font-weight: 600;
         color: $dark-pink;
+        &:hover {
+          color: darken($dark-pink, 30%);
+        }
 
 
       }
