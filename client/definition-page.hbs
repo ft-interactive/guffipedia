@@ -1,10 +1,10 @@
 {{> top }}
 	<main>
-		<h1><a href="">Guffipedia</a></h1>
-     	<div class="headshot"><img src="images/lucy.png"></div>
+		<h1><a href="../">Guffipedia</a></h1>
+     	<div class="headshot"><img src="../images/lucy.png"></div>
      	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
      	<div class="line"></div>
-     	<a href="/guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
+     	<a href="../guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
 
 		<div class="detailed-guff">
 			<div class="word">
@@ -42,22 +42,19 @@
 				{{/if}}
 				{{/if}}
 				{{#if relatedwords}}
-					<p class="detail relatedwords"><strong>Related:</strong>
-					{{#each relatedwords}}<a href="{{slug}}/">{{word}}</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
+					<p class="detail relatedwords">Related:
+					{{#each relatedwords}}<a href="../{{slug}}/">{{word}}</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
 					</p>
 				{{/if}}
 			</div>
 		</div>
 		<div class="navigate-guff">
 			{{#if previousWord}}
-				<a href="{{previousWord.slug}}/" class="previous-guff">&lt&lt Previous Guff<br><span class="preview">{{previousWord.word}}</span></a>
+				<a href="../{{previousWord.slug}}/" class="previous-guff">&laquo; Previous<br><span class="preview">{{previousWord.word}}</span></a>
 			{{/if}}
 			{{#if nextWord}}
-				<a href="{{nextWord.slug}}/" class="next-guff">Next Guff &gt&gt<br><span class="preview">{{nextWord.word}}</span></a>
+				<a href="../{{nextWord.slug}}/" class="next-guff">Next &raquo;<br><span class="preview">{{nextWord.word}}</span></a>
 			{{/if}}
-		</div>
-		<div class="bottom-container">
-			<a href="" class="back-button o-buttons o-buttons--standout">Back</a>
 		</div>
 	</main>
 {{> bottom }}

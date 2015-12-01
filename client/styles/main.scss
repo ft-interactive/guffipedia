@@ -35,14 +35,6 @@ body {
     }
 
 
-.headshot {
-   img {
-    width: 170px;
-    display: block;
-    margin: 0 auto;
-  }
-}
-
 .line {
   margin-top: 5px;
   border-bottom: 1px solid #e9decf;
@@ -59,37 +51,6 @@ body {
   border-width: 0px;
   &:hover {
     color: inherit;
-  }
-}
-
-@include oGridRespondTo(S) {
-  .headshot {
-    img {
-      width: 154px;
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
-  .twitter-share-button {
-    margin-top: 5px;
-
-  }
-}
-
-@include oGridRespondTo(L) {
-  .headshot {
-    img {
-      width: 154px;
-    }
-  }
-}
-
-@include oGridRespondTo(XL) {
-  .headshot {
-    img {
-      width: 154px;
-    }
   }
 }
 
@@ -117,6 +78,19 @@ main {
       color: black;
       &:hover {
         color: black;
+      }
+    }
+  }
+  .headshot {
+    img {
+      width: 100px;
+      display: block;
+      margin: 0 auto;
+      @include oGridRespondTo(S) {
+        width: 154px;
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     }
   }
@@ -169,6 +143,7 @@ main {
   }
   div.word {
     @include word-style();
+    position: relative;
   }
   .details {
     padding: 0 0 5px 18px;
@@ -187,15 +162,19 @@ main {
       &.relatedwords a {
         color: $dark-pink;
         font-family: "courier";
+        font-weight: bold;
       }
     }
   }
   .detailed-guff {
     margin-top: 15px;
+    .word {
+      padding-right: 75px;
+    }
     .twitter-share-button {
-      top: 20px;
-      margin-right: 8px;
-      float: right;
+      position: absolute !important;
+      top: 0;
+      right: 0;
     }
   }
   .navigate-guff {
@@ -205,31 +184,31 @@ main {
       display: block;
     }
     a {
-      display: block;
+      box-sizing: border-box;
+      display: inline;
       font-weight: normal;
       margin: 15px 0;
+      padding: 0 10px;
       text-align: center;
-      @include oGridRespondTo(S) {
-        box-sizing: border-box;
-        display: inline;
-        padding: 0 10px;
-        width: 50%;
-        &.previous-guff {
-          font-size: 1.1em;
-          float: left;
-          text-align: left;
-        }
-        &.next-guff {
-          font-size: 1.1em;
-          float: right;
-          text-align: right;
-        }
+      width: 50%;
+      &.previous-guff {
+        font-size: 1.1em;
+        float: left;
+        text-align: left;
+      }
+      &.next-guff {
+        font-size: 1.1em;
+        float: right;
+        text-align: right;
       }
       .preview {
         font-family: "courier";
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 600;
         color: $dark-pink;
+        @include oGridRespondTo(S) {
+          font-size: 1.2em;
+        }
         &:hover {
           color: darken($dark-pink, 30%);
         }
