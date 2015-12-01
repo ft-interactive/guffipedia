@@ -9,8 +9,9 @@
 
 
 		<ul class="guffs">
-			{{#each words}}
+			{{#each homewords}}
 			<li class="guff">
+				<h2>{{#if @first}}Latest{{else}}Random{{/if}} Guff</h2>
 				<a class="word" href="{{@key}}/">{{word}}</a>
 				<div class="details">
 					{{#if definition}}
