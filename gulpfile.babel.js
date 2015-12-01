@@ -246,12 +246,12 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
     for (const row of spreadsheet) {
       if (words[row.slug]) throw new Error('Already exists: ' + row.slug);
 
-      row.pageTitle = `Guffipedia: “${row.word}” – FT.com`;
-
       words[row.slug] = row;
     }
 
-    var slugIndex = Object.keys(words).sort();
+    let wordArray = Object.keys(words);
+    
+    let slugIndex = wordArray.sort();
 
     for (const row of spreadsheet) {
       let currentSlug = row.slug;
@@ -263,21 +263,46 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
         };
       });
 
+      let slugPointer = null;
+
       if (slugIndex.indexOf(currentSlug) > 0) {
-        words[currentSlug].previousWord = {
-          slug: words[slugIndex[slugIndex.indexOf(currentSlug)-1]].slug,
-          word: words[slugIndex[slugIndex.indexOf(currentSlug)-1]].word
-        };
+        slugPointer = slugIndex.indexOf(currentSlug)-1;
+      } else {
+        slugPointer = slugIndex.length-1;
       }
+
+      words[currentSlug].previousWord = {
+        slug: words[slugIndex[slugPointer]].slug,
+        word: words[slugIndex[slugPointer]].word
+      };
+
       if (slugIndex.indexOf(currentSlug) < slugIndex.length-1) {
-        words[currentSlug].nextWord = {
-          slug: words[slugIndex[slugIndex.indexOf(currentSlug)+1]].slug,
-          word: words[slugIndex[slugIndex.indexOf(currentSlug)+1]].word
-        };
+        slugPointer = slugIndex.indexOf(currentSlug)+1;
+      } else {
+        slugPointer = 0;
       }
+
+      words[currentSlug].nextWord = {
+        slug: words[slugIndex[slugPointer]].slug,
+        word: words[slugIndex[slugPointer]].word
+      };
     }
 
     fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
+
+    let dateIndex = wordArray.sort(function(a, b) {
+      return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
+    });
+
+    const homewords = {};
+
+    homewords[dateIndex[0]] = words[dateIndex[0]];
+
+    let randomNumber = Math.floor(Math.random() * ((dateIndex.length)-1)) + 1;
+    homewords[dateIndex[randomNumber]] = words[dateIndex[randomNumber]];
+
+    fs.writeFileSync('client/homewords.json', JSON.stringify(homewords, null, 2));
+
   })
 );
 
@@ -297,7 +322,9 @@ gulp.task('templates', () => {
     fs.writeFileSync(`.tmp/${slug}/index.html`, html);
   }
 
+  const homewords = JSON.parse(fs.readFileSync('client/homewords.json', 'utf8'));
+
   const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
-  const html = mainPageTemplate({words});
+  const html = mainPageTemplate({homewords});
   fs.writeFileSync(`.tmp/index.html`, html);
 });

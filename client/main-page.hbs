@@ -5,12 +5,13 @@
      	<div class="headshot"><img src="images/lucy.png"></div>
      	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
      	<div class="line"></div>
-     	<a href="/guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
+     	<a href="../guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
 
 
 		<ul class="guffs">
-			{{#each words}}
+			{{#each homewords}}
 			<li class="guff">
+				<h2>{{#if @first}}Latest{{else}}Random{{/if}} Guff</h2>
 				<a class="word" href="{{@key}}/">{{word}}</a>
 				<div class="details">
 					{{#if definition}}
@@ -21,7 +22,7 @@
 						<p class="detail usageexample">{{usageexample}}</p>
 					{{/if}}
 					{{#if relatedwords}}
-						<p class="detail relatedwords"><strong>Related:</strong>
+						<p class="detail relatedwords">Related:
 						{{#each relatedwords}}<a href="{{slug}}/">{{word}}</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
 						</p>
 					{{/if}}

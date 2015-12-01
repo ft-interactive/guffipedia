@@ -8,10 +8,10 @@
   
     <link rel="shortcut icon" href="https://ig.ft.com/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="//im.ft-static.com/m/icons/apple-touch-icon.png">
+    
+    {{#if word}}<base href="../" />{{/if}}
 
-    {{#if word}}<base href="../">{{/if}}
-
-    <title>{{#if pageTitle}}{{pageTitle}}{{else}}Guffipedia - FT.com{{/if}}</title>
+    <title>Guffipedia{{#if word}}: “{{word}}”{{/if}} - FT.com</title>
     <!-- <meta name="description" content="ENTER A DESCRIPTION HERE"> -->
     
     <!-- smoosh -->
