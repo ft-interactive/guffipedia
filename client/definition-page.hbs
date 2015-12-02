@@ -1,6 +1,6 @@
 {{> top }}
 	<main>
-		<h1><a href="">Guffipedia</a></h1>
+		<h1><a href=".">Guffipedia</a></h1>
      	<div class="headshot"><img src="images/lucy.png"></div>
      	<div class="subheader">Lucy Kellaway's dictionary of business jargon and corporate nonsense</div>
      	<div class="line"></div>
@@ -14,22 +14,22 @@
 			</div>
 			<div class="details">
 				{{#if definition}}
-					<p class="detail definition"><strong>Translation
-					</strong> {{definition}}</p>
+					<p class="detail definition"><strong>Translation</strong> {{definition}}</p>
 				{{/if}}
 				{{#if showPerpetratorData}}
 					<p class="detail perpetrator"><strong>Perpetrator</strong>
 				{{/if}}
-				{{#if sourceurl}}<a href="{{sourceurl}}" target="_blank">{{/if}}
 					{{#if perpetrator}}{{perpetrator}}{{/if}}{{#if perpetrator}}{{#if usagesource}}, {{/if}}{{/if}}{{#if usagesource}}{{usagesource}}{{/if}}
-					{{#unless perpetrator}}{{#unless usagesource}}{{#if sourceurl}}{{sourceurl}}{{/if}}{{/unless}}{{/unless}}
-				{{#if sourceurl}}</a>{{/if}}
 				{{#if showPerpetratorData}}
 					</p>
 				{{/if}}
 				{{#if usageexample}}
 					<p class="detail usageexample">
-						<strong>Usage example </strong>
+						<strong>
+							{{#if sourceurl}}<a href="{{sourceurl}}" target="_blank">{{/if}}
+								Usage example
+							{{#if sourceurl}}</a>{{/if}}
+						</strong>
 						{{usageexample}}
 					</p>
 				{{/if}}
