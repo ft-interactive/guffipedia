@@ -21,9 +21,12 @@ body {
 
 
 .site-header {
-  padding: 18px 0 14px;
+  padding: 12px 0 8px;
   text-align: center;
   border-bottom: 1px solid #e9decf;
+  @include oGridRespondTo(S) {
+    padding: 18px 0 14px;
+  }
 
   > a {
     opacity: 0.75;
@@ -31,7 +34,11 @@ body {
   }
 }
     .masthead {
-      height: 18px;
+      height: 14px;
+      @include oGridRespondTo(S) {
+        height: 18px;
+      }
+
     }
 
 
