@@ -139,8 +139,12 @@ main {
   }
 
   .guffs {
-    margin-top: 20px;
+    margin-top: 10px;
     padding-left: 0;
+    @include oGridRespondTo(S) {
+      margin-top: 20px;
+    }
+
   }
   .guff {
     list-style-type: none;
@@ -170,7 +174,7 @@ main {
   }
   .details {
     padding: 0 0 5px 18px;
-    margin-top: 8px;
+    margin-top: 6px;
     font-family: MetricWeb;
     text-align: left;
     font-size: 1em;
@@ -178,10 +182,15 @@ main {
     color: #6a6d68;
     @include oGridRespondTo(S) {
       font-size: 1.4em;
+      margin-top: 8px;
     }
     .detail {
-      margin-top: 0.5em;
-      margin-bottom: 0.5em;
+      margin-top: 0.3em;
+      margin-bottom: 0.3em;
+      @include oGridRespondTo(S) {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
       &.relatedwords a {
         color: $dark-pink;
         font-family: "courier";
