@@ -286,6 +286,10 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
         slug: words[slugIndex[slugPointer]].slug,
         word: words[slugIndex[slugPointer]].word
       };
+
+      words[currentSlug].showPerpetratorData = words[currentSlug].perpetrator
+                                              || words[currentSlug].usagesource
+                                              || words[currentSlug].sourceurl ? true : null;
     }
 
     fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
