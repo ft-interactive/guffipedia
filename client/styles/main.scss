@@ -235,6 +235,7 @@ main {
       .preview {
         font-family: "courier";
         font-size: 1em;
+        line-height: 1em;
         font-weight: 600;
         color: $dark-pink;
         @include oGridRespondTo(S) {
