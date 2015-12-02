@@ -1,4 +1,9 @@
 @import 'o-fonts/main';
+
+// scss-lint:disable ImportPath
+@import 'normalize-scss/_normalize.scss';
+// scss-lint:enable ImportPath
+
 $o-grid-is-silent: false;
 $o-buttons-is-silent: false;
 

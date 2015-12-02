@@ -1,7 +1,9 @@
+/* eslint-disable no-loop-func */
+
+import 'dotenv/config';
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
-import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import gulp from 'gulp';
@@ -17,8 +19,6 @@ import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
 
 const $ = require('auto-plug')('gulp');
-
-dotenv.load();
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
@@ -95,7 +95,7 @@ function getBundlers(useWatchify) {
 }
 
 // compresses images (client => dist)
-gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
+gulp.task('compress-images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
   .pipe($.imagemin({
     progressive: true,
     interlaced: true,
@@ -103,27 +103,30 @@ gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
   .pipe(gulp.dest('dist'))
 );
 
-// copies over miscellaneous files (client => dist)
-gulp.task('copy', () => gulp.src(
-  OTHER_SCRIPTS.concat([
-    'client/**/*',
-    '!client/**/*.{html,scss,js,jpg,png,gif,svg,hbs}', // all handled by other tasks
-  ]), {dot: true})
+// minifies JS (.tmp => dist)
+gulp.task('minify-js', () => gulp.src('.tmp/**/*.js')
+  .pipe($.uglify({output: {inline_script: true}})) // eslint-disable-line camelcase
   .pipe(gulp.dest('dist'))
 );
 
-// minifies all HTML, CSS and JS (.tmp & client => dist)
-gulp.task('html', done => {
-  const assets = $.useref.assets({
-    searchPath: ['.tmp', 'client', '.'],
-  });
+// minifies CSS (.tmp => dist)
+gulp.task('minify-css', () => gulp.src('.tmp/**/*.css')
+  .pipe($.minifyCss({compatibility: '*'}))
+  .pipe(gulp.dest('dist'))
+);
 
+// copies over miscellaneous files (client => dist)
+gulp.task('copy-misc-files', () => gulp.src(
+  [
+    'client/**/*',
+    '!client/**/*.{html,scss,js,jpg,png,gif,svg,hbs}', // all handled by other tasks,
+  ], {dot: true})
+  .pipe(gulp.dest('dist'))
+);
+
+// inlines short scripts/styles and minifies HTML (dist => dist)
+gulp.task('finalise-html', done => {
   gulp.src('.tmp/**/*.html')
-    .pipe(assets)
-    .pipe($.if('*.js', $.uglify({output: {inline_script: true}}))) // eslint-disable-line camelcase
-    .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
-    .pipe(assets.restore())
-    .pipe($.useref())
     .pipe(gulp.dest('dist'))
     .on('end', () => {
       gulp.src('dist/**/*.html')
@@ -135,7 +138,7 @@ gulp.task('html', done => {
 });
 
 // clears out the dist and .tmp folders
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+gulp.task('clean', del.bind(null, ['.tmp/*', 'dist/*', '!dist/.git'], {dot: true}));
 
 // // runs a development server (serving up .tmp and client)
 gulp.task('serve', ['download-data', 'styles'], function (done) {
@@ -180,12 +183,14 @@ gulp.task('serve:dist', ['build'], done => {
   }, done);
 });
 
-// task to do a straightforward browserify bundle (build only)
-gulp.task('scripts', function () {
-  return mergeStream(getBundlers().map(function (bundler) {
-    return bundler.execute();
-  }));
-});
+// preprocess/copy scripts (client => .tmp)
+// (this is part of prod build task; not used during serve)
+gulp.task('scripts', () => mergeStream([
+  // bundle browserify entries
+  getBundlers().map(bundler => bundler.execute()),
+  // also copy over 'other' scripts
+  gulp.src(OTHER_SCRIPTS.map(script => 'client{/_hack,}/' + script)).pipe(gulp.dest('.tmp'))
+]));
 
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
@@ -206,7 +211,7 @@ gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
 // lints SCSS files
 gulp.task('scsslint', () => gulp.src('client/styles/**/*.scss')
   .pipe($.scssLint({bundleExec: true}))
-  // .pipe($.if(env === 'production', $.scssLint.failReporter()))
+  .pipe($.if(env === 'production', $.scssLint.failReporter()))
 );
 
 // makes a production build (client => dist)
@@ -214,9 +219,14 @@ gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', 'scsslint', 'eslint', 'download-data'],
-    ['scripts', 'styles', 'copy', 'templates'],
-    ['html', 'images'],
+    // preparatory
+    ['clean', /* 'scsslint', 'eslint', */ 'download-data'],
+    // preprocessing (client/templates => .tmp)
+    ['scripts', 'styles', 'templates'],
+    // optimisation (+ copying over misc files) (.tmp/client => dist)
+    ['minify-js', 'minify-css', 'compress-images', 'copy-misc-files'],
+    // finalise the HTML in dist (by inlining small scripts/stylesheets then minifying the HTML)
+    ['finalise-html'],
   done);
 });
 
@@ -238,7 +248,8 @@ gulp.task('deploy', done => {
 });
 
 // downloads the data from bertha to client/words.json
-gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/data`)
+const SPREADSHEET_URL = `https://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/data`;
+gulp.task('download-data', () => fetch(SPREADSHEET_URL)
   .then(res => res.json())
   .then(spreadsheet => {
     const words = {};
@@ -250,25 +261,23 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
     }
 
     let wordArray = Object.keys(words);
-    
+
     let slugIndex = wordArray.sort();
 
     for (const row of spreadsheet) {
       let currentSlug = row.slug;
 
-      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWordSlug => {
-        return {
-          slug: relatedWordSlug,
-          word: words[relatedWordSlug].word
-        };
-      });
+      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWordSlug => ({
+        slug: relatedWordSlug,
+        word: words[relatedWordSlug].word
+      }));
 
       let slugPointer = null;
 
       if (slugIndex.indexOf(currentSlug) > 0) {
-        slugPointer = slugIndex.indexOf(currentSlug)-1;
+        slugPointer = slugIndex.indexOf(currentSlug) - 1;
       } else {
-        slugPointer = slugIndex.length-1;
+        slugPointer = slugIndex.length - 1;
       }
 
       words[currentSlug].previousWord = {
@@ -276,8 +285,8 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
         word: words[slugIndex[slugPointer]].word
       };
 
-      if (slugIndex.indexOf(currentSlug) < slugIndex.length-1) {
-        slugPointer = slugIndex.indexOf(currentSlug)+1;
+      if (slugIndex.indexOf(currentSlug) < slugIndex.length - 1) {
+        slugPointer = slugIndex.indexOf(currentSlug) + 1;
       } else {
         slugPointer = 0;
       }
@@ -294,7 +303,7 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
 
     fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
 
-    let dateIndex = wordArray.sort(function(a, b) {
+    let dateIndex = wordArray.sort(function (a, b) {
       return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
     });
 
@@ -302,11 +311,10 @@ gulp.task('download-data', () => fetch(`https://bertha.ig.ft.com/republish/publi
 
     homewords[dateIndex[0]] = words[dateIndex[0]];
 
-    let randomNumber = Math.floor(Math.random() * ((dateIndex.length)-1)) + 1;
+    let randomNumber = Math.floor(Math.random() * (dateIndex.length - 1)) + 1;
     homewords[dateIndex[randomNumber]] = words[dateIndex[randomNumber]];
 
     fs.writeFileSync('client/homewords.json', JSON.stringify(homewords, null, 2));
-
   })
 );
 
