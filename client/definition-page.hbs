@@ -17,15 +17,13 @@
 					<p class="detail definition"><strong>Translation
 					</strong> {{definition}}</p>
 				{{/if}}
-				{{#if sourceurl}}
-				{{#if usagesource}}
-					<p class="detail source">Spotted at <a href="{{sourceurl}}" target="_blank">{{usagesource}}</a></p>
+				{{#if showPerpetratorData}}
+					<p class="detail perpetrator"><strong>Perpetrator</strong>
 				{{/if}}
-				{{/if}}
-				{{#if perpetrator}}
-					<p class="detail perpetrator">
-						<strong>Perpetrator</strong>
-						{{perpetrator}}
+				{{#if sourceurl}}<a href="{{sourceurl}}" target="_blank">{{/if}}
+					{{#if perpetrator}}{{perpetrator}}{{/if}}{{#if perpetrator}}{{#if usagesource}}, {{/if}}{{/if}}{{#if usagesource}}{{usagesource}}{{/if}}
+				{{#if sourceurl}}</a>{{/if}}
+				{{#if showPerpetratorData}}
 					</p>
 				{{/if}}
 				{{#if usageexample}}
