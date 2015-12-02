@@ -92,9 +92,8 @@ main {
     img {
       width: 75px;
       position: absolute;
-      top: 3px;
+      top: 5px;
       right: 0;
-
       @include oGridRespondTo(S) {
         width: 154px;
         position: absolute;
@@ -113,7 +112,7 @@ main {
   .subheader {
     width: 80%;
     font-family: MetricWeb;
-    font-size: 0.9em;
+    font-size: 1em;
     line-height: 1.1em;
     text-align: left;
     margin-top: 2px;
