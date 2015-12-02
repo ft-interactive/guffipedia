@@ -22,6 +22,7 @@
 				{{/if}}
 				{{#if sourceurl}}<a href="{{sourceurl}}" target="_blank">{{/if}}
 					{{#if perpetrator}}{{perpetrator}}{{/if}}{{#if perpetrator}}{{#if usagesource}}, {{/if}}{{/if}}{{#if usagesource}}{{usagesource}}{{/if}}
+					{{#unless perpetrator}}{{#unless usagesource}}{{#if sourceurl}}{{sourceurl}}{{/if}}{{/unless}}{{/unless}}
 				{{#if sourceurl}}</a>{{/if}}
 				{{#if showPerpetratorData}}
 					</p>
