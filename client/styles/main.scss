@@ -115,6 +115,20 @@ main {
       width: 75%;
     }
   }
+
+  .paraHeads {
+    margin-top: 8px;
+    font-family: MetricWeb;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1em;
+    line-height: 1.2em;
+    color: #6a6d68;
+    @include oGridRespondTo(S) {
+      font-size: 1.5em;
+    }
+  }
+
   .guffs {
     margin-top: 20px;
     padding-left: 0;
