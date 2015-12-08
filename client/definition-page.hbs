@@ -6,12 +6,10 @@
      	<div class="line"></div>
      	<a href="../guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
 
-     	<a href="list.html">Guff Index</a>
-     	
 		<div class="detailed-guff">
 			<div class="word">
 				{{word}}
-				<a href="https://twitter.com/share" class="twitter-share-button"{count} data-text="Crime against the English language #{{wordid}}"></a>
+				<a href="https://twitter.com/share" class="twitter-share-button"{count} data-text="@lucykellaway explains what '{{word}}' really means"></a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 			</div>
 			<div class="details">
@@ -21,7 +19,9 @@
 				{{#if showPerpetratorData}}
 					<p class="detail perpetrator"><strong>Perpetrator</strong>
 				{{/if}}
-					{{#if perpetrator}}{{perpetrator}}{{/if}}{{#if perpetrator}}{{#if usagesource}}, {{/if}}{{/if}}{{#if usagesource}}{{usagesource}}{{/if}}
+					{{#unless usageexample}}{{#if sourceurl}}<a href="{{sourceurl}}" target="_blank">{{/if}}{{/unless}}
+						{{#if perpetrator}}{{perpetrator}}{{/if}}{{#if perpetrator}}{{#if usagesource}}, {{/if}}{{/if}}{{#if usagesource}}{{usagesource}}{{/if}}
+					{{#unless usageexample}}{{#if sourceurl}}</a>{{/if}}{{/unless}}
 				{{#if showPerpetratorData}}
 					</p>
 				{{/if}}
