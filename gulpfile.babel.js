@@ -298,6 +298,9 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
 
       words[currentSlug].showPerpetratorData = words[currentSlug].perpetrator
                                               || words[currentSlug].usagesource ? true : null;
+      if(words[currentSlug].wordid) {
+        words[currentSlug].wordid = words[currentSlug].wordid.substring(4,words[currentSlug].wordid.length);
+      }
     }
 
     fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
