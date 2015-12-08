@@ -264,6 +264,12 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
 
     let slugIndex = wordArray.sort();
 
+    const sortedWords = {};
+
+    for (const word of wordArray) {
+      sortedWords[word] = words[word];
+    }
+
     for (const row of spreadsheet) {
       let currentSlug = row.slug;
 
@@ -303,7 +309,7 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
       }
     }
 
-    fs.writeFileSync('client/words.json', JSON.stringify(words, null, 2));
+    fs.writeFileSync('client/words.json', JSON.stringify(sortedWords, null, 2));
 
     let dateIndex = wordArray.sort(function (a, b) {
       return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
