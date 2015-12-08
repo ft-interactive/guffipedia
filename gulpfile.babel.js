@@ -270,6 +270,13 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
       sortedWords[word] = words[word];
     }
 
+    let monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
     for (const row of spreadsheet) {
       let currentSlug = row.slug;
 
@@ -307,6 +314,10 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
       if(words[currentSlug].wordid) {
         words[currentSlug].wordid = words[currentSlug].wordid.substring(4,words[currentSlug].wordid.length);
       }
+
+      let date = new Date(words[currentSlug].submissiondate);
+
+      words[currentSlug].formatteddate = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
     }
 
     fs.writeFileSync('client/words.json', JSON.stringify(sortedWords, null, 2));
@@ -345,10 +356,6 @@ gulp.task('templates', () => {
   const homewords = JSON.parse(fs.readFileSync('client/homewords.json', 'utf8'));
 
   const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
-  const mainPageHtml = mainPageTemplate({homewords});
+  const mainPageHtml = mainPageTemplate({homewords, words});
   fs.writeFileSync(`.tmp/index.html`, mainPageHtml);
-
-  const listPageTemplate = Handlebars.compile(fs.readFileSync('client/list-page.hbs', 'utf8'));
-  const listPageHtml = listPageTemplate({words});
-  fs.writeFileSync(`.tmp/list.html`, listPageHtml);
 });

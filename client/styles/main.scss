@@ -59,7 +59,7 @@ body {
   line-height: 1.1em;
   width: 100%;
   margin-top: 8px;
-  background-color: #ccc2c2;
+  background-color: $light-grey;
   border-width: 0px;
   &:hover {
     color: inherit;
@@ -81,7 +81,7 @@ main {
     font-size: 2em;
     line-height: 1.4em;
     margin: 0px;
-    color: #000000;
+    color: black;
     @include oGridRespondTo(S) {
       font-size: 4em;
       text-align: left;
@@ -121,7 +121,7 @@ main {
     line-height: 1em;
     text-align: left;
     margin-top: 2px;
-    color: #6a6d68;
+    color: $dark-grey;
     @include oGridRespondTo(S) {
       font-size: 1.8em;
       text-align: left;
@@ -136,9 +136,14 @@ main {
     text-align: left;
     font-size: 1em;
     line-height: 1.2em;
-    color: #6a6d68;
+    color: $dark-grey;
     @include oGridRespondTo(S) {
       font-size: 1.5em;
+    }
+    span {
+      font-size: 0.7em;
+      font-style: italic;
+      font-weight: normal;
     }
   }
 
@@ -183,7 +188,7 @@ main {
     text-align: left;
     font-size: 1em;
     line-height: 1.2em;
-    color: #6a6d68;
+    color: $dark-grey;
     @include oGridRespondTo(S) {
       font-size: 1.4em;
       margin-top: 8px;
