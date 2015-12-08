@@ -330,15 +330,19 @@ gulp.task('templates', () => {
 
   for (const slug of Object.keys(words)) {
     const word = words[slug];
-    const html = definitionPageTemplate(word);
+    const definitionPageHtml = definitionPageTemplate(word);
 
     mkdirp.sync(`.tmp/${slug}`);
-    fs.writeFileSync(`.tmp/${slug}/index.html`, html);
+    fs.writeFileSync(`.tmp/${slug}/index.html`, definitionPageHtml);
   }
 
   const homewords = JSON.parse(fs.readFileSync('client/homewords.json', 'utf8'));
 
   const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
-  const html = mainPageTemplate({homewords});
-  fs.writeFileSync(`.tmp/index.html`, html);
+  const mainPageHtml = mainPageTemplate({homewords});
+  fs.writeFileSync(`.tmp/index.html`, mainPageHtml);
+
+  const listPageTemplate = Handlebars.compile(fs.readFileSync('client/list-page.hbs', 'utf8'));
+  const listPageHtml = listPageTemplate({words});
+  fs.writeFileSync(`.tmp/list.html`, listPageHtml);
 });
