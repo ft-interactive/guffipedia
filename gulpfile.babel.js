@@ -278,10 +278,10 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
     }
 
     let monthNames = [
-      "Jan", "Feb", "Mar",
-      "Apr", "May", "Jun", "Jul",
-      "Aug", "Sep", "Oct",
-      "Nov", "Dec"
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
     ];
 
     for (const row of spreadsheet) {
