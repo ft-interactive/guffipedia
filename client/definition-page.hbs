@@ -42,7 +42,7 @@
 				{{/if}}
 				{{#if relatedwords}}
 					<p class="detail relatedwords">Related:
-					{{#each relatedwords}}<a href="{{slug}}/">{{word}} &raquo;</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
+					{{#each relatedwords}}<a href="{{slug}}/">{{word}}&raquo;</a>{{#unless @last}}&comma;&nbsp;{{/unless}}{{/each}}
 					</p>
 				{{/if}}
 			</div>
@@ -54,7 +54,7 @@
 				<a href="{{previousWord.slug}}/" class="previous-guff">&laquo; Previous<br><span class="preview">{{previousWord.word}}</span></a>
 			{{/if}}
 			{{#if nextWord}}
-				<a href="{{nextWord.slug}}/" class="next-guff">Next &raquo;<br><span class="preview">{{nextWord.word}}</span></a>
+				<a href="{{nextWord.slug}}/" class="next-guff">Next&raquo;<br><span class="preview">{{nextWord.word}}</span></a>
 			{{/if}}
 		</div>
 	</main>
