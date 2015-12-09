@@ -55,6 +55,10 @@ body {
 .btnHolder {
   text-align: center;
   height: 50px;
+  margin-bottom: 15px;
+  @include oGridRespondTo(S) {
+    margin-bottom: 25px;
+  }
 
 }
 
@@ -62,18 +66,18 @@ body {
   font-family: MetricWeb;
   font-size: 1.3em;
   line-height: 1.1em;
-  height: 50px;
+  height: 55px;
   width: 75%;
   margin-top: 8px;
   background-color: #af516c;
   border-width: 0px;
-  padding-top: 5px;
+  padding-top: 3px;
   @include oGridRespondTo(S) {
     font-size: 1.7em;
     line-height: 1.1em;
-    height: 50px;
-    width: 55%;
-    margin-top: 7px;
+    height: 60px;
+    width: 65%;
+    padding-top: 12px;
   }
   &:hover {
     color: inherit;
@@ -174,14 +178,13 @@ main {
     @include oGridRespondTo(S) {
       font-size: 0.7em;
       line-height: 0.7em;
-      margin-top: 7px;
+      margin-top: 6px;
     }
     span {
       font-size: 0.9em;
       font-weight: 600;
       font-weight: normal;
     }
-
   }
 
   .intro {
