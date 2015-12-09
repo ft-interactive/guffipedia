@@ -94,6 +94,10 @@ function getBundlers(useWatchify) {
   });
 }
 
+function slugify(value) {
+  return value.toLowerCase().trim().replace(/ /g, '-').replace(/['\(\)]/g, '');
+}
+
 // compresses images (client => dist)
 gulp.task('compress-images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
   .pipe($.imagemin({
@@ -256,7 +260,7 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
 
     for (const row of spreadsheet) {
 
-      row.slug = row.word.toLowerCase().trim().replace(/ /g, '-').replace(/['\(\)]/g, '');
+      row.slug = slugify(row.word);
 
       if (words[row.slug]) throw new Error('Already exists: ' + row.slug);
 
@@ -281,11 +285,11 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
     ];
 
     for (const row of spreadsheet) {
-      let currentSlug = row.slug;
+      let currentSlug = slugify(row.word);
 
-      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWordSlug => ({
-        slug: relatedWordSlug,
-        word: words[relatedWordSlug].word
+      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWord => ({
+        slug: slugify(relatedWord),
+        word: words[slugify(relatedWord)].word
       }));
 
       let slugPointer = null;

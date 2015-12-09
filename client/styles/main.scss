@@ -147,6 +147,17 @@ main {
     }
   }
 
+  .intro {
+    font-family: MetricWeb;
+    text-align: left;
+    font-size: 0.8em;
+    line-height: 1.2em;
+    color: $dark-grey;
+    @include oGridRespondTo(S) {
+      font-size: 1.2em;
+    }
+  }
+
   .guffs {
     margin-top: 10px;
     padding-left: 0;
