@@ -60,14 +60,21 @@ body {
 
 .o-buttons {
   font-family: MetricWeb;
-  font-size: 1.7em;
+  font-size: 1.3em;
   line-height: 1.1em;
   height: 50px;
-  width: 55%;
+  width: 75%;
   margin-top: 8px;
   background-color: #af516c;
   border-width: 0px;
-  padding-top: 10px;
+  padding-top: 5px;
+  @include oGridRespondTo(S) {
+    font-size: 1.7em;
+    line-height: 1.1em;
+    height: 50px;
+    width: 55%;
+    margin-top: 8px;
+  }
   &:hover {
     color: inherit;
   }
