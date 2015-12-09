@@ -252,6 +252,26 @@ main {
       right: 0;
     }
   }
+  .twitter {
+    a {
+      display: block;
+      margin: 0 auto;
+      width: 250px;
+      border-radius: 6px;
+      background: #ddd;
+      background: linear-gradient(to bottom,#fff,#dfdfdf);
+      border: 1px solid #ccc;
+      color: #43423e!important;
+      text-shadow: 0 1px #fff;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
   .navigate-guff {
     &:after {
       clear: both;
