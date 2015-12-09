@@ -7,11 +7,7 @@
      	<a href="../guffipedia-form" class="o-buttons o-buttons--standout">Suggest an entry</a>
 
 		<div class="detailed-guff">
-			<div class="word">
-				{{word}}
-				<a href="https://twitter.com/share" class="twitter-share-button"{count} data-text="@lucykellaway explains what '{{word}}' really means"></a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-			</div>
+			<div class="word">{{word}}</div>
 			<div class="details">
 				{{#if definition}}
 					<p class="detail definition"><strong>Translation into plain English</strong> {{definition}}</p>
@@ -49,6 +45,8 @@
 				{{/if}}
 			</div>
 		</div>
+		<div class="twitter">
+			<a href="https://twitter.com/intent/tweet?text=Corporate%20language%20crime%20no.%20{{wordid}}%3A%20{{word}}%20ft.com%2Fguff" target="_blank"><i class="tweet-icon"></i>Tweet</a>		</div>
 		<div class="navigate-guff">
 			{{#if previousWord}}
 				<a href="{{previousWord.slug}}/" class="previous-guff">&laquo; Previous<br><span class="preview">{{previousWord.word}}</span></a>
