@@ -63,16 +63,16 @@ body {
 }
 
 .o-buttons {
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: MetricWeb;
-  font-size: 1.3em;
+  font-size: 1.4em;
   line-height: 1.1em;
-  height: 55px;
-  width: 75%;
+  height: 45px;
+  width: 85%;
   margin-top: 8px;
   background-color: #af516c;
   border-width: 0px;
-  padding-top: 3px;
+  padding-top: 9px;
   @include oGridRespondTo(S) {
     border-radius: 10px;
     font-size: 1.7em;
@@ -276,12 +276,11 @@ main {
       display: block;
       margin: 0 auto;
       width: 250px;
-      border-radius: 6px;
+      border-radius: 8px;
       background: #ddd;
-      background: linear-gradient(to bottom,#fff,#dfdfdf);
+      background: linear-gradient(to bottom,#bb6d82,#af516c);
       border: 1px solid #ccc;
-      color: #43423e!important;
-      text-shadow: 0 1px #fff;
+      color: #ffffff!important;
       font-size: 16px;
       font-weight: 700;
       text-align: center;
