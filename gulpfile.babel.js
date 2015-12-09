@@ -255,6 +255,9 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
     const words = {};
 
     for (const row of spreadsheet) {
+
+      row.slug = row.word.toLowerCase().trim().replace(/ /g, '-').replace(/['\(\)]/g, '');
+
       if (words[row.slug]) throw new Error('Already exists: ' + row.slug);
 
       words[row.slug] = row;
@@ -271,10 +274,10 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
     }
 
     let monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sep", "Oct",
+      "Nov", "Dec"
     ];
 
     for (const row of spreadsheet) {
