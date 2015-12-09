@@ -359,6 +359,10 @@ gulp.task('templates', () => {
   const homewords = JSON.parse(fs.readFileSync('client/homewords.json', 'utf8'));
 
   const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
-  const mainPageHtml = mainPageTemplate({homewords, words});
+  const mainPageHtml = mainPageTemplate({
+    trackingEnv: (env === 'production' ? 'p' : 't'),
+    homewords,
+    words,
+  });
   fs.writeFileSync(`.tmp/index.html`, mainPageHtml);
 });
