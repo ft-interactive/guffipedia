@@ -312,7 +312,17 @@ main {
       }
     }
   }
-
+  .thanks-message {
+    font-family: MetricWeb;
+    text-align: left;
+    font-size: 0.8em;
+    line-height: 1.2em;
+    color: $dark-grey;
+    margin-top: 20px;
+    @include oGridRespondTo(S) {
+      font-size: 1.2em;
+    }
+  }
   .bottom-container {
     margin-top: 15px;
     &:after {
