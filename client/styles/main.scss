@@ -85,6 +85,27 @@ body {
     color: inherit;
   }
 }
+.o-buttons--tweet {
+  background-color: #007dc5;
+  color: #ffffff;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-family: MetricWeb;
+  font-size: 1.2em;
+  line-height: 1.0em;
+  height: 25px;
+  width: 150px;
+  padding-top: 3px;
+  @include oGridRespondTo(S) {
+    font-size: 1.7em;
+    line-height: 1.1em;
+    height: 40px;
+    padding-top: 4px;
+  }
+  &:hover {
+    color: inherit;
+  }
+  }
 
 .source {
   text-decoration: none;
