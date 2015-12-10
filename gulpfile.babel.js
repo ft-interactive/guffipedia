@@ -369,4 +369,7 @@ gulp.task('templates', () => {
     words,
   });
   fs.writeFileSync(`.tmp/index.html`, mainPageHtml);
+
+  const thanksPageTemplate = Handlebars.compile(fs.readFileSync('client/thanks-page.hbs', 'utf8'));
+  fs.writeFileSync(`.tmp/thanks.html`, thanksPageTemplate());
 });
