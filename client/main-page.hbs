@@ -15,9 +15,8 @@
      		<a href="../guffipedia-form" class="o-buttons o-buttons--standout">Suggest your own entry</a>
      	</div>
      	
-		<ul class="guffs">
-			{{#each homewords}}
-			<li class="guff">
+		{{#each homewords}}
+			<div class="{{#if @first}}latest{{else}}random{{/if}}-guff">
 				<div class="paraHeads">{{#if @first}}Latest guff <span>added on {{formatteddate}}</span>{{else}}Random guff{{/if}}</div>
 				<a class="word" href="{{@key}}/">{{word}}&raquo;</a>
 				<div class="details">
@@ -34,14 +33,15 @@
 						</p>
 					{{/if}}
 				</div>
+			</div>
+		{{/each}}
+		<div class="paraHeads">All the guff</div>
+		<ul class="guffs">
+		{{#each words}}
+			<li class="guff">
+				<a class="word" href="{{@key}}/">{{word}}&raquo;</a>
 			</li>
-			{{/each}}
-			<div class="paraHeads">All the guff</div>
-			{{#each words}}
-				<ul class="listing">
-					<a class="word" href="{{@key}}/">{{word}}&raquo;</a>
-				</ul>
-			{{/each}}
+		{{/each}}
 		</ul>
     </main>
 {{> bottom }}

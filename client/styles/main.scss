@@ -197,25 +197,6 @@ main {
     }
     }
   }
-  .listing {
-    margin-top: 6px;
-    font-family: MetricWeb;
-    font-weight: 600;
-    text-align: left;
-    font-size: 0.7em;
-    line-height: 0.6em;
-    color: $dark-grey;
-    @include oGridRespondTo(S) {
-      font-size: 0.7em;
-      line-height: 0.7em;
-      margin-top: 6px;
-    }
-    span {
-      font-size: 0.9em;
-      font-weight: 600;
-      font-weight: normal;
-    }
-  }
 
   .intro {
     font-family: MetricWeb;
@@ -228,17 +209,37 @@ main {
     }
   }
 
-  .guffs {
+  .latest-guff {
     margin-top: 10px;
-    padding-left: 0;
     @include oGridRespondTo(S) {
       margin-top: 20px;
     }
 
   }
-  .guff {
-    list-style-type: none;
-    margin-bottom: 10px;
+
+  .guffs {
+    padding-left: 18px;
+    .guff {
+      list-style-type: none;
+      margin-bottom: 10px;
+      margin-top: 6px;
+      font-family: MetricWeb;
+      font-weight: 600;
+      text-align: left;
+      font-size: 0.7em;
+      line-height: 0.6em;
+      color: $dark-grey;
+      @include oGridRespondTo(S) {
+        font-size: 0.7em;
+        line-height: 0.7em;
+        margin-top: 6px;
+      }
+      span {
+        font-size: 0.9em;
+        font-weight: 600;
+        font-weight: normal;
+      }
+    }
   }
   @mixin word-style() {
     color: $dark-pink;
