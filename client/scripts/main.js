@@ -1,17 +1,17 @@
 import oHoverable from 'o-hoverable';
 import attachFastClick from 'fastclick';
 
-var words = {};
+let words = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-  // // make hover effects work on touch devices
+  // make hover effects work on touch devices
   oHoverable.init();
 
-  // // remove the 300ms tap delay on mobile browsers
+  // remove the 300ms tap delay on mobile browsers
   attachFastClick(document.body);
 
   if (document.documentElement.className === 'enhanced') {
-    var xmlhttp = new XMLHttpRequest();
+    let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         words = JSON.parse(xmlhttp.responseText);
@@ -21,27 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
     xmlhttp.open('GET', 'words.json', true);
     xmlhttp.send();
   }
-
 });
 
 function newRandomGuff() {
-  var wordArray = Object.keys(words);
+  let wordArray = Object.keys(words);
 
-  var randomNumber = Math.floor(Math.random() * (wordArray.length - 1)) + 1;
+  let randomNumber = Math.floor(Math.random() * (wordArray.length - 1)) + 1;
 
   while (words[wordArray[randomNumber]].slug === document.getElementsByClassName('latest-guff')[0].id) {
     randomNumber = Math.floor(Math.random() * (wordArray.length - 1)) + 1;
   }
 
-  var randomWord = words[wordArray[randomNumber]];
+  const randomWord = words[wordArray[randomNumber]];
 
-  var randomGuffElement = document.getElementsByClassName('random-guff')[0];
+  const randomGuffElement = document.getElementsByClassName('random-guff')[0];
 
-  var randomGuffClone = randomGuffElement.cloneNode(true);
+  let randomGuffClone = randomGuffElement.cloneNode(true);
 
   randomGuffClone.setAttribute('style', 'visibility: visible;');
 
-  var refreshButton = randomGuffClone.getElementsByClassName('refresh')[0];
+  let refreshButton = randomGuffClone.getElementsByClassName('refresh')[0];
 
   if (!refreshButton) {
     refreshButton = document.createElement('span');
@@ -53,11 +52,11 @@ function newRandomGuff() {
     newRandomGuff();
   });
 
-  var word = randomGuffClone.getElementsByClassName('word')[0];
-  var details = randomGuffClone.getElementsByClassName('details')[0];
-  var definition = details.getElementsByClassName('detail definition')[0];
-  var usageExample = details.getElementsByClassName('detail usageexample')[0];
-  var relatedWordsElement = details.getElementsByClassName('detail relatedwords')[0];
+  let word = randomGuffClone.getElementsByClassName('word')[0];
+  let details = randomGuffClone.getElementsByClassName('details')[0];
+  const definition = details.getElementsByClassName('detail definition')[0];
+  const usageExample = details.getElementsByClassName('detail usageexample')[0];
+  const relatedWordsElement = details.getElementsByClassName('detail relatedwords')[0];
 
   word.href = randomWord.slug + '/';
   word.innerHTML = randomWord.word + '&raquo;';
@@ -66,7 +65,7 @@ function newRandomGuff() {
     details.removeChild(definition);
   }
   if (randomWord.definition) {
-    var newDefinitionElement = document.createElement('p');
+    let newDefinitionElement = document.createElement('p');
 
     newDefinitionElement.className = 'detail definition';
     newDefinitionElement.innerHTML = '<strong>Translation into plain English</strong> ' + randomWord.definition;
@@ -78,7 +77,7 @@ function newRandomGuff() {
     details.removeChild(usageExample);
   }
   if (randomWord.usageexample) {
-    var newUsageExampleElement = document.createElement('p');
+    let newUsageExampleElement = document.createElement('p');
 
     newUsageExampleElement.className = 'detail usageexample';
     newUsageExampleElement.innerHTML = randomWord.usageexample;
@@ -90,14 +89,14 @@ function newRandomGuff() {
     details.removeChild(relatedWordsElement);
   }
   if (randomWord.relatedwords.length > 0) {
-    var newRelatedWordsElement = document.createElement('p');
+    let newRelatedWordsElement = document.createElement('p');
 
     newRelatedWordsElement.className = 'detail relatedwords';
     newRelatedWordsElement.innerHTML = 'Related: ';
 
-    var relatedWords = randomWord.relatedwords;
-    for (var relatedWord of relatedWords) {
-      var relatedWordElement = document.createElement('a');
+    const relatedWords = randomWord.relatedwords;
+    for (const relatedWord of relatedWords) {
+      let relatedWordElement = document.createElement('a');
       relatedWordElement.href = relatedWord.slug + '/';
       relatedWordElement.innerHTML = relatedWord.word;
       if (relatedWords.indexOf(relatedWord) > 0) {
