@@ -38,7 +38,6 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/main.js',
   'scripts/top.js'
 ];
 
