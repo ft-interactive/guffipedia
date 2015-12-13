@@ -11,6 +11,10 @@ $o-buttons-is-silent: false;
 @import 'o-footer/main';
 @import 'o-grid/main';
 @import 'o-buttons/main';
+@import "o-ft-icons/main";
+
+// Load the webfont that contains all icons as glyphs
+@include oFtIconsFontFace();
 
 @import 'fonts';
 @import 'colours';
@@ -118,6 +122,11 @@ body {
   text-decoration: none;
 }
 
+.enhanced {
+  .random-guff {
+    visibility: hidden;
+  }
+}
 main {
   @include oGridColspan((default: full-width, M: 10, L: 8, XL: 6));
   @include oGridCenter;
@@ -195,6 +204,12 @@ main {
       @include oGridRespondTo(S) {
       font-size: 0.8em;
     }
+      &.refresh {
+        @include oFtIconsBaseIconStyles();
+        @extend %o-ft-icons-icon--refresh;
+        cursor: pointer;
+        margin: -0.2em 0 0 0.6em;
+      }
     }
   }
 

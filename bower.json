@@ -6,6 +6,7 @@
     "o-hoverable": "~1.1.0",
     "o-fonts": "~1.6.4",
     "o-footer": "~4.0.0",
+    "o-ft-icons": "^3.0.1",
     "o-grid": "^4.0.0",
     "o-buttons": "2.0.4",
     "normalize-scss": "~3.0.3"
