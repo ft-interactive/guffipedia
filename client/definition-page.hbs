@@ -35,11 +35,11 @@
 					</p>
 				{{/if}}
 				{{#if lucycommentary}}
-				{{#if commenturl}}
+				
 					<p class="detail lucycommentary">
-						<strong><a href="{{commenturl}}" target="_blank">Lucy's commentary</a></strong>
+						<strong>{{#if commenturl}}<a href="{{commenturl}}" target="_blank">{{/if}}Lucy&rsquo;s commentary{{#if commenturl}}</a>{{/if}}</strong>
 						{{lucycommentary}}</p>
-				{{/if}}
+			
 				{{/if}}
 				{{#if relatedwords}}
 					<p class="detail relatedwords">Related:
