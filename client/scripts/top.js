@@ -36,4 +36,3 @@ if (cutsTheMustard) {
 // browsers (just to get basics like the HTML5 Shiv), and a special one (with
 // things like Promise) for CTM browsers.
 addScript('https://cdn.polyfill.io/v1/polyfill.min.js');
-addScript('scripts/main.js');
