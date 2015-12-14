@@ -11,10 +11,6 @@ $o-buttons-is-silent: false;
 @import 'o-footer/main';
 @import 'o-grid/main';
 @import 'o-buttons/main';
-@import "o-ft-icons/main";
-
-// Load the webfont that contains all icons as glyphs
-@include oFtIconsFontFace();
 
 @import 'fonts';
 @import 'colours';
@@ -188,9 +184,6 @@ main {
 
   .paraHeads {
     margin-top: 8px;
-    font-family: MetricWeb;
-    font-weight: 600;
-    text-align: left;
     font-size: 1em;
     line-height: 1.2em;
     color: $dark-grey;
@@ -198,18 +191,47 @@ main {
       font-size: 1.5em;
       line-height: 1.3em;
     }
-    span {
+    &:after {
+    	content: '';
+    	clear: both;
+    	display: block;
+    }
+    .label {
+    	float: left;
+	    font-family: MetricWeb;
+	    font-weight: 600;
+    }
+    .timestamp {
       font-size: 0.9em;
       font-weight: 400;
+      float: left;
+      margin-left: 0.5em;
       @include oGridRespondTo(S) {
-      font-size: 0.8em;
+	      font-size: 0.8em;
+	    }
     }
-      &.refresh {
-        @include oFtIconsBaseIconStyles();
-        @extend %o-ft-icons-icon--refresh;
-        cursor: pointer;
-        margin: -0.2em 0 0 0.6em;
-      }
+    .refresh {
+    	// Older browsers: PNG fallback
+    	background-image: url('//image.webservices.ft.com/v1/images/raw/fticon:refresh?width=12&format=png&source=guffipedia');
+
+    	// Modern browsers: SVG covering the whole size of the element
+    	// we declare mutliple backgrounds so that only modern browsers read this property
+    	background-image: url('//image.webservices.ft.com/v1/images/raw/fticon:refresh?format=svg&source=guffipedia'), none;
+    	background-size: cover;
+      cursor: pointer;
+      display: block;
+      float: left;
+      margin: 3px 0 0 5px;
+      opacity: 0.5;
+      width: 12px;
+      height: 12px;
+      @include oGridRespondTo(S) {
+      	// Older browsers: PNG fallback
+      	background-image: url('//image.webservices.ft.com/v1/images/raw/fticon:refresh?width=20&format=png&source=guffipedia');
+      	margin: 6px 0 0 10px;
+	      width: 20px;
+	      height: 20px;
+	    }
     }
   }
 
