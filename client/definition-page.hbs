@@ -8,6 +8,7 @@
      		<a href="form/" class="o-buttons o-buttons--standout">Suggest your own entry</a>
      	</div>
 
+     	{{#with word}}
 		<div class="detailed-guff">
 			<div class="word">{{word}}</div>
 			<div class="details">
@@ -58,5 +59,6 @@
 				<a href="{{nextWord.slug}}/" class="next-guff">Next&raquo;<br><span class="preview">{{nextWord.word}}</span></a>
 			{{/if}}
 		</div>
+		{{/with}}
 	</main>
 {{> bottom }}
