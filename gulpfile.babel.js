@@ -354,7 +354,11 @@ gulp.task('templates', () => {
 
   for (const slug of Object.keys(words)) {
     const word = words[slug];
-    const definitionPageHtml = definitionPageTemplate(word);
+    const definitionPageHtml = definitionPageTemplate({
+      trackingEnv: (env === 'production' ? 'p' : 't'),
+      page: "definition",
+      word
+    });
 
     mkdirp.sync(`.tmp/${slug}`);
     fs.writeFileSync(`.tmp/${slug}/index.html`, definitionPageHtml);
@@ -365,11 +369,16 @@ gulp.task('templates', () => {
   const mainPageTemplate = Handlebars.compile(fs.readFileSync('client/main-page.hbs', 'utf8'));
   const mainPageHtml = mainPageTemplate({
     trackingEnv: (env === 'production' ? 'p' : 't'),
+    page: "main",
     homewords,
     words,
   });
   fs.writeFileSync(`.tmp/index.html`, mainPageHtml);
 
   const thanksPageTemplate = Handlebars.compile(fs.readFileSync('client/thanks-page.hbs', 'utf8'));
-  fs.writeFileSync(`.tmp/thanks.html`, thanksPageTemplate());
+  const thanksPageHtml = thanksPageTemplate({
+    trackingEnv: (env === 'production' ? 'p' : 't'),
+    page: "thanks"
+  })
+  fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
 });

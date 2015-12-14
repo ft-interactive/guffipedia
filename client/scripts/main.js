@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // remove the 300ms tap delay on mobile browsers
   attachFastClick(document.body);
 
-  if (document.documentElement.className === 'enhanced') {
+  if (page === 'main' && document.documentElement.className === 'enhanced') {
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
