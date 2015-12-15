@@ -2,8 +2,6 @@
 
 > The Guffipedia houses the finest drivel from this archive - as well as fresh twaddle submitted by readers and certified by Lucy Kellaway.
 
-----
-
 ## Usage
 
 To begin, clone this repo and running `npm i`. You'll then need a `.env` file in the root of the project with a `SPREADSHEET_KEY` variable.
