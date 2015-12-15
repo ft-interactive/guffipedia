@@ -1,8 +1,6 @@
-# [Guffipedia](https://ig.ft.com/sites/guffipedia/)
+# [Guffipedia](https://ig.ft.com/sites/guffipedia/) [![Build Status][travis-image]][travis-url]
 
 > The Guffipedia houses the finest drivel from this archive - as well as fresh twaddle submitted by readers and certified by Lucy Kellaway.
-
-[![Build Status][travis-image]][travis-url]
 
 ----
 
