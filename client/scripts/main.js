@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   attachFastClick(document.body);
 
   if (page === 'main' && document.documentElement.className === 'enhanced') {
-    let xmlhttp = new XMLHttpRequest();
+    let xmlhttp;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+    }
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         words = JSON.parse(xmlhttp.responseText);
@@ -28,35 +33,35 @@ function newRandomGuff() {
 
   let randomNumber = Math.floor(Math.random() * (wordArray.length - 1)) + 1;
 
-  while (words[wordArray[randomNumber]].slug === document.getElementsByClassName('latest-guff')[0].id) {
+  while (words[wordArray[randomNumber]].slug === document.querySelector('.latest-guff').id) {
     randomNumber = Math.floor(Math.random() * (wordArray.length - 1)) + 1;
   }
 
   const randomWord = words[wordArray[randomNumber]];
 
-  const randomGuffElement = document.getElementsByClassName('random-guff')[0];
+  const randomGuffElement = document.querySelector('.random-guff');
 
   let randomGuffClone = randomGuffElement.cloneNode(true);
 
   randomGuffClone.setAttribute('style', 'visibility: visible;');
 
-  let refreshButton = randomGuffClone.getElementsByClassName('refresh')[0];
+  let refreshButton = randomGuffClone.querySelector('.refresh');
 
   if (!refreshButton) {
     refreshButton = document.createElement('span');
     refreshButton.className = 'refresh';
-    randomGuffClone.getElementsByClassName('paraHeads')[0].appendChild(refreshButton);
+    randomGuffClone.querySelector('.paraHeads').appendChild(refreshButton);
   }
 
   refreshButton.addEventListener('click', () => {
     newRandomGuff();
   });
 
-  let word = randomGuffClone.getElementsByClassName('word')[0];
-  let details = randomGuffClone.getElementsByClassName('details')[0];
-  const definition = details.getElementsByClassName('detail definition')[0];
-  const usageExample = details.getElementsByClassName('detail usageexample')[0];
-  const relatedWordsElement = details.getElementsByClassName('detail relatedwords')[0];
+  let word = randomGuffClone.querySelector('.word');
+  let details = randomGuffClone.querySelector('.details');
+  const definition = details.querySelector('.detail.definition');
+  const usageExample = details.querySelector('.detail.usageexample');
+  const relatedWordsElement = details.querySelector('.detail.relatedwords');
 
   word.href = randomWord.slug + '/';
   word.innerHTML = randomWord.word + '&raquo;';
@@ -107,6 +112,6 @@ function newRandomGuff() {
 
     details.appendChild(newRelatedWordsElement);
   }
-  document.getElementsByTagName('main')[0].insertBefore(randomGuffClone, randomGuffElement);
-  document.getElementsByTagName('main')[0].removeChild(randomGuffElement);
+  document.querySelector('main').insertBefore(randomGuffClone, randomGuffElement);
+  document.querySelector('main').removeChild(randomGuffElement);
 }
