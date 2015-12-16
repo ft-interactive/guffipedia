@@ -54,7 +54,6 @@ body {
 
 .btnHolder {
   text-align: center;
-  height: 50px;
   margin-bottom: 15px;
   @include oGridRespondTo(S) {
     margin-bottom: 30px;
@@ -112,7 +111,15 @@ body {
   &:hover {
     color: inherit;
   }
+}
+
+.suggest-button {
+  height: auto;
+  padding: 10px;
+  @include oGridRespondTo(S) {
+    padding: 16px;
   }
+}
 
 .source {
   text-decoration: none;
