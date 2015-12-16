@@ -23,7 +23,9 @@ Commits to the master branch will built on CI. Successful builds will be publish
 This project began life with the [starter-kit](https://github.com/ft-interactive/starter-kit).
 
 ## Licence
-This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
+This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT). 
+
+Please note the MIT licence includes only the software, and none of the content of this site, which is Copyright (c) Financial Times Ltd. For more information about re-publishing FT content, please contact our [syndication department](http://syndication.ft.com/).
 
 [travis-url]: https://travis-ci.org/ft-interactive/guffipedia
 [travis-image]: https://travis-ci.org/ft-interactive/guffipedia.svg
