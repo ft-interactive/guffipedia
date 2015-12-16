@@ -1,6 +1,6 @@
 # [Guffipedia](https://ig.ft.com/sites/guffipedia/) [![Build Status][travis-image]][travis-url]
 
-> The Guffipedia houses the finest drivel from this archive - as well as fresh twaddle submitted by readers and certified by Lucy Kellaway.
+> The FT Guffipedia houses the finest corporate drivel from the archive of [Lucy Kellaway's annual Golden Flannel Awards](https://next.ft.com/stream/authorsId/Q0ItMDAwMDkyNg==-QXV0aG9ycw==) - as well as fresh twaddle submitted by readers and certified by Lucy Kellaway.
 
 ## Usage
 
