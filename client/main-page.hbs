@@ -16,7 +16,7 @@
      	</div>
      	
 		{{#each homewords}}
-			<div class="{{#if @first}}latest{{else}}random{{/if}}-guff">
+			<div class="{{#if @first}}latest{{else}}random{{/if}}-guff" {{#if @first}}id="{{slug}}"{{/if}}>
 				<div class="paraHeads">{{#if @first}}<span class="label">Latest guff</span><span class="timestamp">added on {{formatteddate}}</span>{{else}}<span class="label">Random guff</span>{{/if}}</div>
 				<a class="word" href="{{@key}}/">{{word}}&raquo;</a>
 				<div class="details">
