@@ -9,10 +9,8 @@
     <link rel="shortcut icon" href="https://ig.ft.com/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="//im.ft-static.com/m/icons/apple-touch-icon.png">
     
-    {{#with word}}
-        {{#if word}}<base href="../" />{{/if}}
-        <title>{{#if word}}{{word}} - {{/if}}Lucy Kellaway's Dictionary of Business Jargon and Guff</title>
-    {{/with}}
+    {{#if word.word}}<base href="../" />{{/if}}
+    <title>{{#if word.word}}{{word.word}} - {{/if}}Lucy Kellaway's Dictionary of Business Jargon and Guff</title>
     
     <!-- smoosh -->
     <script src="scripts/top.js"></script>
