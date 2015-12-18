@@ -50,6 +50,7 @@ function newRandomGuff() {
   if (!refreshButton) {
     refreshButton = document.createElement('span');
     refreshButton.className = 'refresh';
+    refreshButton.innerHTML="<img src='images/reload.png' >Get another"
     randomGuffClone.querySelector('.paraHeads').appendChild(refreshButton);
   }
 
