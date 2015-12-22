@@ -224,7 +224,7 @@ gulp.task('build', done => {
 
   runSequence(
     // preparatory
-    ['clean', /* 'scsslint', 'eslint', */ 'download-data'],
+    ['clean', /* 'scsslint', 'eslint', */ 'download-data', 'create-rss-feed'],
     // preprocessing (client/templates => .tmp)
     ['scripts', 'styles', 'templates'],
     // optimisation (+ copying over misc files) (.tmp/client => dist)
@@ -381,4 +381,31 @@ gulp.task('templates', () => {
     page: "thanks"
   })
   fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
+});
+
+gulp.task('create-rss-feed', ['download-data'], () => {
+
+  const rssTitle = 'Guffipedia';
+  const rssLink = 'http://ft.com/guff';
+  const rssDescription = 'Lucy Kellaway’s dictionary of business jargon and corporate nonsense';
+
+  const words = JSON.parse(fs.readFileSync('client/words.json', 'utf8'));
+
+  let wordArray = Object.keys(words);
+  let dateIndex = wordArray.sort(function (a, b) {
+    return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
+  });
+
+  let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description>`;
+  for (const word of dateIndex) {
+    rssString += '<item>';
+    rssString += `<title>${words[word].word}</title>`;
+    rssString += `<link>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</link>`;
+    rssString += `<guid>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</guid>`;
+    rssString += `<description>${words[word].definition}</description>`;
+    rssString += '</item>';
+  }
+  rssString += '</channel></rss>';
+
+  fs.writeFileSync('rss.xml', rssString);
 });
