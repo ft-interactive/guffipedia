@@ -383,7 +383,7 @@ gulp.task('templates', () => {
   fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
 });
 
-gulp.task('create-rss-feed', () => {
+gulp.task('create-rss-feed', ['download-data'], () => {
 
   const rssTitle = 'Guffipedia';
   const rssLink = 'http://ft.com/guff';
