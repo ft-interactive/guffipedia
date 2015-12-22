@@ -22,6 +22,7 @@
     "gulp-imagemin": "^2.4.0",
     "gulp-minify-css": "^1.2.1",
     "gulp-minify-html": "^1.0.4",
+    "gulp-pretty-data": "^0.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",
     "gulp-scss-lint": "^0.3.8",
