@@ -12,6 +12,7 @@ import igdeploy from 'igdeploy';
 import mkdirp from 'mkdirp';
 import mergeStream from 'merge-stream';
 import path from 'path';
+import prettyData from 'gulp-pretty-data';
 import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import subdir from 'subdir';
@@ -402,10 +403,18 @@ gulp.task('create-rss-feed', ['download-data'], () => {
     rssString += `<title>${words[word].word}</title>`;
     rssString += `<link>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</link>`;
     rssString += `<guid>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</guid>`;
-    rssString += `<description>${words[word].definition}</description>`;
+    if(words[word].definition) {
+      let descriptionTemplate = Handlebars.compile('{{definition}}');
+      let descriptionHtml = descriptionTemplate({definition: words[word].definition});
+      rssString += `<description>${descriptionHtml}</description>`;
+    }
     rssString += '</item>';
   }
   rssString += '</channel></rss>';
 
   fs.writeFileSync('rss.xml', rssString);
+
+  gulp.src('rss.xml')
+    .pipe(prettyData({type: 'prettify'}))
+    .pipe(gulp.dest('.'));
 });
