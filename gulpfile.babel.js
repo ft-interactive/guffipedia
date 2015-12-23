@@ -296,8 +296,9 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
 
     for (const row of spreadsheet) {
       let currentSlug = slugify(row.word);
+      let currentWord = words[currentSlug];
 
-      words[currentSlug].relatedwords = words[currentSlug].relatedwords.map(relatedWord => ({
+      currentWord.relatedwords = currentWord.relatedwords.map(relatedWord => ({
         slug: slugify(relatedWord),
         word: words[slugify(relatedWord)].word
       }));
@@ -310,7 +311,7 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
         slugPointer = slugIndex.length - 1;
       }
 
-      words[currentSlug].previousWord = {
+      currentWord.previousWord = {
         slug: words[slugIndex[slugPointer]].slug,
         word: words[slugIndex[slugPointer]].word
       };
@@ -321,20 +322,24 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
         slugPointer = 0;
       }
 
-      words[currentSlug].nextWord = {
+      currentWord.nextWord = {
         slug: words[slugIndex[slugPointer]].slug,
         word: words[slugIndex[slugPointer]].word
       };
 
-      words[currentSlug].showPerpetratorData = words[currentSlug].perpetrator
-                                              || words[currentSlug].usagesource ? true : null;
-      if(words[currentSlug].wordid) {
-        words[currentSlug].wordid = words[currentSlug].wordid.substring(4,words[currentSlug].wordid.length);
+      currentWord.showPerpetratorData = currentWord.perpetrator
+                                              || currentWord.usagesource ? true : null;
+      if(currentWord.wordid) {
+        currentWord.wordid = currentWord.wordid.substring(4,currentWord.wordid.length);
       }
 
-      let date = new Date(words[currentSlug].submissiondate);
+      let date = new Date(currentWord.submissiondate);
+      currentWord.formatteddate = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 
-      words[currentSlug].formatteddate = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+      const tweetTextString = `“${currentWord.word}”: Corporate language crime no. ${currentWord.wordid} https://ig.ft.com/sites/guffipedia/${currentSlug}`;
+      const tweetTextRSSTemplate = Handlebars.compile('{{tweetText}}');
+      currentWord.tweettextrss = tweetTextRSSTemplate({tweetText: tweetTextString});
+      currentWord.tweettexturi = encodeURI(tweetTextString);
     }
 
     fs.writeFileSync('client/words.json', JSON.stringify(sortedWords, null, 2));
@@ -407,15 +412,10 @@ gulp.task('create-rss-feed', () => {
   });
 
   let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description><atom:link href="https://ig.ft.com/sites/guffipedia/rss.xml" rel="self" type="application/rss+xml" />`;
-  for (const word of dateIndex) {
+  for (const slug of dateIndex) {
+    let currentWord = words[slug];
     rssString += '<item>';
-    rssString += `<title>${words[word].word}</title>`;
-    rssString += `<link>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</link>`;
-    rssString += `<guid>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</guid>`;
-    if(words[word].definition) {
-      let description = Handlebars.compile('{{definition}}', {definition: words[word].definition});
-      rssString += `<description>${description}</description>`;
-    }
+    rssString += `<title>${currentWord.word}</title><link>http://ig.ft.com/sites/guffipedia/${slug}/</link><guid>http://ig.ft.com/sites/guffipedia/${slug}/</guid><tweet>${currentWord.tweettextrss}</tweet>`;
     rssString += '</item>';
   }
   rssString += '</channel></rss>';
