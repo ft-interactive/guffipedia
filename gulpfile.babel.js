@@ -232,13 +232,15 @@ gulp.task('build', done => {
 
   runSequence(
     // preparatory
-    ['clean', /* 'scsslint', 'eslint', */ 'download-data', 'create-rss-feed'],
+    ['clean', /* 'scsslint', 'eslint', */ 'download-data'],
     // preprocessing (client/templates => .tmp)
     ['scripts', 'styles', 'templates'],
     // optimisation (+ copying over misc files) (.tmp/client => dist)
     ['minify-js', 'minify-css', 'compress-images', 'copy-misc-files'],
     // finalise the HTML in dist (by inlining small scripts/stylesheets then minifying the HTML)
     ['finalise-html'],
+    // create RSS feed in dist
+    ['create-rss-feed'],
   done);
 });
 
@@ -391,7 +393,7 @@ gulp.task('templates', () => {
   fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
 });
 
-gulp.task('create-rss-feed', ['download-data'], () => {
+gulp.task('create-rss-feed', () => {
 
   const rssTitle = 'Guffipedia';
   const rssLink = 'http://ft.com/guff';
@@ -419,11 +421,11 @@ gulp.task('create-rss-feed', ['download-data'], () => {
   }
   rssString += '</channel></rss>';
 
-  fs.writeFileSync('rss.xml', rssString);
+  fs.writeFileSync('dist/rss.xml', rssString);
 
-  gulp.src('rss.xml')
+  gulp.src('dist/rss.xml')
     .pipe(prettyData({type: 'prettify'}))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('dist'));
 });
 
 // helpers
