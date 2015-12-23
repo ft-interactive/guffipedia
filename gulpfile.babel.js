@@ -3,16 +3,19 @@
 import 'dotenv/config';
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
+import clone from 'gulp-clone';
 import del from 'del';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import gulp from 'gulp';
 import Handlebars from 'handlebars';
 import igdeploy from 'igdeploy';
+import jsonTransform from 'gulp-json-transform';
 import mkdirp from 'mkdirp';
 import mergeStream from 'merge-stream';
 import path from 'path';
 import prettyData from 'gulp-pretty-data';
+import rename from 'gulp-rename';
 import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import subdir from 'subdir';
@@ -398,34 +401,33 @@ gulp.task('templates', () => {
   fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
 });
 
-gulp.task('create-rss-feed', () => {
+gulp.task('create-rss-feed', () => gulp.src('client/words.json')
+  .pipe(clone())
+  .pipe(jsonTransform(function(words) {
+    let wordArray = Object.keys(words);
+    let dateIndex = wordArray.sort(function (a, b) {
+      return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
+    });
 
-  const rssTitle = 'Guffipedia';
-  const rssLink = 'http://ft.com/guff';
-  const rssDescription = 'Lucy Kellaway’s dictionary of business jargon and corporate nonsense';
+    const rssTitle = 'Guffipedia';
+    const rssLink = 'http://ft.com/guff';
+    const rssDescription = 'Lucy Kellaway’s dictionary of business jargon and corporate nonsense';
 
-  const words = JSON.parse(fs.readFileSync('client/words.json', 'utf8'));
+    let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description><atom:link href="https://ig.ft.com/sites/guffipedia/rss.xml" rel="self" type="application/rss+xml" />`;
+    for (const slug of dateIndex) {
+      let currentWord = words[slug];
+      rssString += '<item>';
+      rssString += `<title>${currentWord.word}</title><link>http://ig.ft.com/sites/guffipedia/${slug}/</link><guid>http://ig.ft.com/sites/guffipedia/${slug}/</guid><tweet>${currentWord.tweettextrss}</tweet>`;
+      rssString += '</item>';
+    }
+    rssString += '</channel></rss>';
 
-  let wordArray = Object.keys(words);
-  let dateIndex = wordArray.sort(function (a, b) {
-    return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
-  });
-
-  let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description><atom:link href="https://ig.ft.com/sites/guffipedia/rss.xml" rel="self" type="application/rss+xml" />`;
-  for (const slug of dateIndex) {
-    let currentWord = words[slug];
-    rssString += '<item>';
-    rssString += `<title>${currentWord.word}</title><link>http://ig.ft.com/sites/guffipedia/${slug}/</link><guid>http://ig.ft.com/sites/guffipedia/${slug}/</guid><tweet>${currentWord.tweettextrss}</tweet>`;
-    rssString += '</item>';
-  }
-  rssString += '</channel></rss>';
-
-  fs.writeFileSync('dist/rss.xml', rssString);
-
-  gulp.src('dist/rss.xml')
-    .pipe(prettyData({type: 'prettify'}))
-    .pipe(gulp.dest('dist'));
-});
+    return rssString;
+  }))
+  .pipe(rename('rss.xml'))
+  .pipe(prettyData({type: 'prettify'}))
+  .pipe(gulp.dest('dist'))
+);
 
 // helpers
 let preventNextReload; // hack to keep a BS error notification on the screen
