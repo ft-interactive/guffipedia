@@ -406,16 +406,15 @@ gulp.task('create-rss-feed', () => {
     return new Date(words[b].submissiondate) - new Date(words[a].submissiondate);
   });
 
-  let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description>`;
+  let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description><atom:link href="https://ig.ft.com/sites/guffipedia/rss.xml" rel="self" type="application/rss+xml" />`;
   for (const word of dateIndex) {
     rssString += '<item>';
     rssString += `<title>${words[word].word}</title>`;
     rssString += `<link>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</link>`;
     rssString += `<guid>http://ig.ft.com/sites/guffipedia/${words[word].slug}/</guid>`;
     if(words[word].definition) {
-      let descriptionTemplate = Handlebars.compile('{{definition}}');
-      let descriptionHtml = descriptionTemplate({definition: words[word].definition});
-      rssString += `<description>${descriptionHtml}</description>`;
+      let description = Handlebars.compile('{{definition}}', {definition: words[word].definition});
+      rssString += `<description>${description}</description>`;
     }
     rssString += '</item>';
   }
