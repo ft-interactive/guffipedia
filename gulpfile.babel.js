@@ -14,6 +14,7 @@ import jsonTransform from 'gulp-json-transform';
 import mkdirp from 'mkdirp';
 import mergeStream from 'merge-stream';
 import path from 'path';
+import php from 'phpjs';
 import prettyData from 'gulp-pretty-data';
 import rename from 'gulp-rename';
 import runSequence from 'run-sequence';
@@ -290,13 +291,6 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
       sortedWords[word] = words[word];
     }
 
-    let monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
-    ];
-
     for (const row of spreadsheet) {
       let currentSlug = slugify(row.word);
       let currentWord = words[currentSlug];
@@ -336,8 +330,8 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
         currentWord.wordid = currentWord.wordid.substring(4,currentWord.wordid.length);
       }
 
-      let date = new Date(currentWord.submissiondate);
-      currentWord.formatteddate = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+      currentWord.formatteddate = php.date('F j, Y', php.strtotime(currentWord.submissiondate));
+      currentWord.pubdate = php.date('r', php.strtotime(currentWord.submissiondate));
 
       const tweetTextString = `“${currentWord.word}”: Corporate language crime no. ${currentWord.wordid} https://ig.ft.com/sites/guffipedia/${currentSlug}`;
       const tweetTextRSSTemplate = Handlebars.compile('{{tweetText}}');
@@ -428,6 +422,7 @@ gulp.task('create-rss-feed', () => {
       rssString += `<description>${currentWord.tweettextrss}</description>`;
       rssString += `<link>${rssLink}${slug}/</link>`;
       rssString += `<guid>${rssLink}${slug}/</guid>`;
+      rssString += `<pubDate>${currentWord.pubdate}/</pubDate>`;
       rssString += `<guff:formatteddate>${currentWord.formatteddate}</guff:formatteddate>`;
       rssString += `<guff:slug>${currentWord.slug}</guff:slug>`;
       rssString += `<guff:wordid>${currentWord.wordid}</guff:wordid>`;
