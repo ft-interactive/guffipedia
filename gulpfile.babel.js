@@ -425,6 +425,7 @@ gulp.task('create-rss-feed', () => {
       let currentWord = words[slug];
       rssString += '<item>';
       rssString += `<title>${currentWord.word}</title>`;
+      rssString += `<description>${currentWord.tweettextrss}</description>`;
       rssString += `<link>${rssLink}${slug}/</link>`;
       rssString += `<guid>${rssLink}${slug}/</guid>`;
       rssString += `<guff:formatteddate>${currentWord.formatteddate}</guff:formatteddate>`;
