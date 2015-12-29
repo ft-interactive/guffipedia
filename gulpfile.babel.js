@@ -401,7 +401,8 @@ gulp.task('templates', () => {
   fs.writeFileSync(`.tmp/thanks.html`, thanksPageHtml);
 });
 
-gulp.task('create-rss-feed', () => gulp.src('client/words.json')
+gulp.task('create-rss-feed', () => {
+  gulp.src('client/words.json')
   .pipe(clone())
   .pipe(jsonTransform(function(words) {
     let wordArray = Object.keys(words);
@@ -410,26 +411,90 @@ gulp.task('create-rss-feed', () => gulp.src('client/words.json')
     });
 
     const rssTitle = 'Guffipedia';
-    const rssLink = 'http://ft.com/guff';
+    const rssLink = 'https://ig.ft.com/sites/guffipedia/';
     const rssDescription = 'Lucy Kellaway’s dictionary of business jargon and corporate nonsense';
 
-    let rssString = `<?xml version="1.0"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${rssTitle}</title><link>${rssLink}</link><description>${rssDescription}</description><atom:link href="https://ig.ft.com/sites/guffipedia/rss.xml" rel="self" type="application/rss+xml" />`;
+    let rssString = '<?xml version="1.0"?>';
+    rssString += `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:guff="${rssLink}">`;
+    rssString += '<channel>';
+    rssString += `<title>${rssTitle}</title>`;
+    rssString += `<link>${rssLink}</link>`;
+    rssString += `<description>${rssDescription}</description>`;
+    rssString += `<atom:link href="${rssLink}rss.xml" rel="self" type="application/rss+xml" />`;
     for (const slug of dateIndex) {
       let currentWord = words[slug];
       rssString += '<item>';
-      rssString += `<title>${currentWord.word}</title><link>http://ig.ft.com/sites/guffipedia/${slug}/</link><guid>http://ig.ft.com/sites/guffipedia/${slug}/</guid><tweet>${currentWord.tweettextrss}</tweet>`;
+      rssString += `<title>${currentWord.word}</title>`;
+      rssString += `<link>${rssLink}${slug}/</link>`;
+      rssString += `<guid>${rssLink}${slug}/</guid>`;
+      rssString += `<guff:formatteddate>${currentWord.formatteddate}</guff:formatteddate>`;
+      rssString += `<guff:slug>${currentWord.slug}</guff:slug>`;
+      rssString += `<guff:wordid>${currentWord.wordid}</guff:wordid>`;
+      rssString += `<guff:submissiondate>${currentWord.submissiondate}</guff:submissiondate>`;
+      if (currentWord.definition) {
+        const definition = htmlEntities(currentWord.definition);
+        rssString += `<guff:definition>${definition}</guff:definition>`;
+      }
+      if (currentWord.usageexample) {
+        const usageexample = htmlEntities(currentWord.usageexample);
+        rssString += `<guff:usageexample>${usageexample}</guff:usageexample>`;
+      }
+      if (currentWord.lucycommentary) {
+        const lucycommentary = htmlEntities(currentWord.lucycommentary);
+        rssString += `<guff:lucycommentary>${lucycommentary}</guff:lucycommentary>`;
+      }
+      rssString += `<guff:commenturl>${currentWord.commenturl}</guff:commenturl>`;
+      if (currentWord.perpetrator) {
+        const perpetrator = htmlEntities(currentWord.perpetrator);
+        rssString += `<guff:perpetrator>${perpetrator}</guff:perpetrator>`;
+      }
+      if (currentWord.usagesource) {
+        const usagesource = htmlEntities(currentWord.usagesource);
+        rssString += `<guff:usagesource>${usagesource}</guff:usagesource>`;
+      }
+      if (currentWord.sourceurl) {
+        const sourceurl = htmlEntities(currentWord.sourceurl);
+        rssString += `<guff:sourceurl>${sourceurl}</guff:sourceurl>`;
+      }
+      rssString += `<guff:tweet>${currentWord.tweettextrss}</guff:tweet>`;
+      rssString += '<guff:previousword>';
+      rssString += `<guff:slug>${currentWord.previousWord.slug}</guff:slug>`;
+      rssString += `<guff:word>${currentWord.previousWord.word}</guff:word>`;
+      rssString += '</guff:previousword>';
+      rssString += '<guff:nextword>';
+      rssString += `<guff:slug>${currentWord.nextWord.slug}</guff:slug>`;
+      rssString += `<guff:word>${currentWord.nextWord.word}</guff:word>`;
+      rssString += '</guff:nextword>';
+      if (currentWord.relatedwords.length > 0) {
+        rssString += '<guff:relatedwords>';
+        for (const relatedword of currentWord.relatedwords) {
+          rssString += '<guff:relatedword>';
+          rssString += `<guff:slug>${relatedword.slug}</guff:slug>`;
+          rssString += `<guff:word>${relatedword.word}</guff:word>`;
+          rssString += '</guff:relatedword>';
+        }
+        rssString += '</guff:relatedwords>';
+      }
       rssString += '</item>';
     }
-    rssString += '</channel></rss>';
+    rssString += '</channel>';
+    rssString += '</rss>';
 
     return rssString;
   }))
   .pipe(rename('rss.xml'))
-  .pipe(prettyData({type: 'prettify'}))
   .pipe(gulp.dest('dist'))
-);
+});
 
 // helpers
+
+//encode html entities
+function htmlEntities(string) {
+  const template = Handlebars.compile('{{string}}');
+  const html = template({string: string});
+  return html;
+}
+
 let preventNextReload; // hack to keep a BS error notification on the screen
 function reload() {
   if (preventNextReload) {
