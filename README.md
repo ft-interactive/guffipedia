@@ -16,7 +16,7 @@ From then on run the app in development mode:
 
 ## Deploy
 
-Commits to the master branch will built on CI. Successful builds will be published to live. Write tests to prevent bad code being made live.
+Commits to the master branch will build on CI. Successful builds will be published to live. Write tests to prevent bad code being made live.
 
 ## Uses Starter Kit
 
