@@ -295,10 +295,15 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
       let currentSlug = slugify(row.word);
       let currentWord = words[currentSlug];
 
-      currentWord.relatedwords = currentWord.relatedwords.map(relatedWord => ({
+      currentWord.relatedwords = currentWord.relatedwords.map(relatedWord => {
+        if (!words[slugify(relatedWord)]) {
+          console.log('%s doesnt exist');
+          return;
+        }
+        return {
         slug: slugify(relatedWord),
         word: words[slugify(relatedWord)].word
-      }));
+      }}).filter(Boolean);
 
       let slugPointer = null;
 
