@@ -297,7 +297,7 @@ gulp.task('download-data', () => fetch(SPREADSHEET_URL)
 
       currentWord.relatedwords = currentWord.relatedwords.map(relatedWord => {
         if (!words[slugify(relatedWord)]) {
-          console.log('%s doesnt exist');
+          console.log('%s doesnt exist', relatedWord);
           return;
         }
         return {
