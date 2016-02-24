@@ -358,6 +358,9 @@ main {
         color: $dark-pink;
         font-family: "courier";
         font-weight: bold;
+        &:hover {
+          color: darken($dark-pink, 30%);
+        }
       }
     }
   }
